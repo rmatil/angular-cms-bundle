@@ -24,8 +24,6 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 
 class ArticleDataAccessor extends DataAccessor {
 
-    use UpdateUserGroupTrait;
-
     protected $articleMapper;
 
     public function __construct(EntityManagerInterface $em, ArticleMapper $articleMapper, TokenStorageInterface $tokenStorage, LoggerInterface $logger) {
