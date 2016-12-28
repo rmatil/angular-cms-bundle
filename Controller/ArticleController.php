@@ -62,17 +62,17 @@ class ArticleController extends Controller {
     public function updateArticleAction($id, Request $request) {
         $responseFactory = $this->get('rmatil_cms.factory.json_response');
 
-        /** @var \rmatil\CmsBundle\Entity\Article $articleObject */
-        $articleObject = $this->get('jms_serializer')->deserialize(
+        /** @var \rmatil\CmsBundle\Model\ArticleDTO $articleDto */
+        $articleDto = $this->get('jms_serializer')->deserialize(
             $request->getContent(),
             ArticleDTO::class,
             'json'
         );
 
-        $articleObject->setId($id);
+        $articleDto->setId($id);
 
         try {
-            $obj = $this->get('rmatil_cms.data_accessor.article')->update($articleObject);
+            $obj = $this->get('rmatil_cms.data_accessor.article')->update($articleDto);
 
             return $responseFactory->createResponse($obj);
 
@@ -98,7 +98,7 @@ class ArticleController extends Controller {
         /** @var \rmatil\CmsBundle\Model\ArticleDTO $articleDto */
         $articleDto = $this->get('jms_serializer')->deserialize(
             $request->getContent(),
-            'rmatil\CmsBundle\Model\ArticleDTO',
+            ArticleDTO::class,
             'json'
         );
 
@@ -122,7 +122,7 @@ class ArticleController extends Controller {
      *
      * @return JsonResponse
      *
-     * @Route("articles/{id}", name="delete_article", methods={"DELETE"})
+     * @Route("/articles/{id}", name="delete_article", methods={"DELETE"})
      */
     public function deleteArticleByIdAction($id) {
         $responseFactory = $this->get('rmatil_cms.factory.json_response');
