@@ -270,16 +270,4 @@ class User extends BaseUser {
     public function setIsAccountLocked($isLocked) {
         $this->locked = $isLocked;
     }
-
-    public function update(User $user) {
-        $this->setUsername($user->getUsername());
-        $this->setFirstName($user->getFirstName());
-        $this->setLastName($user->getLastName());
-        $this->setEmail($user->getEmail());
-        $this->setPhoneNumber($user->getPhoneNumber());
-        $this->setMobileNumber($user->getMobileNumber());
-        $this->setAddress($user->getAddress());
-        $this->setZipCode($user->getZipCode());
-        $this->setPlace($user->getPlace());
-    }
 }

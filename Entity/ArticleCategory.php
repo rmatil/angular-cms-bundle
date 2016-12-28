@@ -66,8 +66,4 @@ class ArticleCategory {
     public function setName($name) {
         $this->name = $name;
     }
-
-    public function update(ArticleCategory $articleCategory) {
-        $this->setName($articleCategory->getName());
-    }
 }

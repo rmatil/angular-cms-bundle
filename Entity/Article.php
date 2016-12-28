@@ -352,8 +352,4 @@ class Article implements IRestrictable {
     public function setAllowedUserGroup(UserGroup $allowedUserGroup = null) {
         $this->allowedUserGroup = $allowedUserGroup;
     }
-
-    public function update(Article $article) {
-
-    }
 }
