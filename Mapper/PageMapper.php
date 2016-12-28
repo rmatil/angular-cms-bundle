@@ -17,8 +17,7 @@ class PageMapper extends AbstractMapper {
     protected $userGroupMapper;
     protected $userMapper;
 
-    public function __construct(PageCategoryMapper $pageCategoryMapper, ArticleMapper $articleMapper, LanguageMapper $languageMapper, UserGroupMapper $userGroupMapper, UserMapper $userMapper) {
-        $this->pageCategoryMapper = $pageCategoryMapper;
+    public function __construct(ArticleMapper $articleMapper, LanguageMapper $languageMapper, UserGroupMapper $userGroupMapper, UserMapper $userMapper) {
         $this->articleMapper = $articleMapper;
         $this->languageMapper = $languageMapper;
         $this->userGroupMapper = $userGroupMapper;
@@ -37,10 +36,6 @@ class PageMapper extends AbstractMapper {
         $pageDto = new PageDTO();
         $pageDto->setId($page->getId());
         $pageDto->setUrlName($page->getUrlName());
-
-        if (null !== $page->getCategory()) {
-            $pageDto->setCategory($this->pageCategoryMapper->entityToDto($page->getCategory()));
-        }
 
         if (null !== $page->getAuthor()) {
             $pageDto->setAuthor($this->userMapper->entityToDto($page->getAuthor()));
@@ -96,10 +91,6 @@ class PageMapper extends AbstractMapper {
         $page = new Page();
         $page->setId($pageDto->getId());
         $page->setUrlName($pageDto->getUrlName());
-
-        if (null !== $pageDto->getCategory()) {
-            $page->setCategory($this->pageCategoryMapper->dtoToEntity($pageDto->getCategory()));
-        }
 
         if (null !== $pageDto->getAuthor()) {
             $page->setAuthor($this->userMapper->dtoToEntity($pageDto->getAuthor()));

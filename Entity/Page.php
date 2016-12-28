@@ -32,15 +32,6 @@ class Page {
     protected $urlName;
 
     /**
-     * The category to which the page belongs
-     *
-     * @ORM\ManyToOne(targetEntity="PageCategory", cascade="persist")
-     *
-     * @var \rmatil\CmsBundle\Entity\PageCategory
-     */
-    protected $category;
-
-    /**
      * The author of this page
      *
      * @ORM\ManyToOne(targetEntity="User", cascade="persist")
@@ -196,24 +187,6 @@ class Page {
     }
 
     /**
-     * Gets the The category to which the page belongs.
-     *
-     * @return \rmatil\CmsBundle\Entity\PageCategory
-     */
-    public function getCategory() {
-        return $this->category;
-    }
-
-    /**
-     * Sets the The category to which the page belongs.
-     *
-     * @param \rmatil\CmsBundle\Entity\PageCategory $category the category
-     */
-    public function setCategory(PageCategory $category = null) {
-        $this->category = $category;
-    }
-
-    /**
      * Gets the The author of this page.
      *
      * @return \rmatil\CmsBundle\Entity\User
@@ -277,7 +250,7 @@ class Page {
     }
 
     /**
-     * Sets the Parentpage of this page.
+     * Sets the Parent page of this page.
      *
      * @param \rmatil\CmsBundle\Entity\Page $parent the parent
      */

@@ -21,9 +21,6 @@ services:
     rmatil_cms.mapper.language_mapper:
         class: rmatil\CmsBundle\Mapper\LanguageMapper
 
-    rmatil_cms.mapper.page_category_mapper:
-        class: rmatil\CmsBundle\Mapper\PageCategoryMapper
-
     rmatil_cms.mapper.user_group_mapper:
         class: rmatil\CmsBundle\Mapper\UserGroupMapper
 
@@ -36,7 +33,7 @@ services:
 
     rmatil_cms.mapper.page_mapper:
         class: rmatil\CmsBundle\Mapper\PageMapper
-        arguments: ['@rmatil_cms.mapper.page_category_mapper', '@rmatil_cms.mapper.article_mapper', '@rmatil_cms.mapper.language_mapper', '@rmatil_cms.mapper.user_group_mapper', '@rmatil_cms.mapper.user_mapper']
+        arguments: ['@rmatil_cms.mapper.article_mapper', '@rmatil_cms.mapper.language_mapper', '@rmatil_cms.mapper.user_group_mapper', '@rmatil_cms.mapper.user_mapper']
 
     rmatil_cms.security.restrictable_voter:
         class: rmatil\CmsBundle\Security\RestrictableVoter

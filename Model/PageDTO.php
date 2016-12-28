@@ -30,16 +30,6 @@ class PageDTO {
     protected $urlName = '';
 
     /**
-     * The category to which the page belongs
-     *
-     * @Type("rmatil\CmsBundle\Model\PageCategoryDTO")
-     * @MaxDepth(1)
-     *
-     * @var PageCategoryDTO
-     */
-    protected $category;
-
-    /**
      * The author of this page
      *
      * @Type("rmatil\CmsBundle\Model\UserDTO")
@@ -187,20 +177,6 @@ class PageDTO {
      */
     public function setUrlName(string $urlName) {
         $this->urlName = $urlName;
-    }
-
-    /**
-     * @return PageCategoryDTO
-     */
-    public function getCategory(): PageCategoryDTO {
-        return $this->category;
-    }
-
-    /**
-     * @param PageCategoryDTO $category
-     */
-    public function setCategory(PageCategoryDTO $category) {
-        $this->category = $category;
     }
 
     /**
