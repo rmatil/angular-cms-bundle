@@ -2,59 +2,58 @@
 
 namespace rmatil\CmsBundle\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation\MaxDepth;
 use JMS\Serializer\Annotation\Type;
-use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * @ORM\Entity 
+ * @ORM\Entity
  * @ORM\Table(name="files")
  **/
 class File {
 
     /**
      * Id of the File
-     * 
-     * @ORM\Id 
-     * @ORM\Column(type="integer") 
+     *
+     * @ORM\Id
+     * @ORM\Column(type="integer")
      * @ORM\GeneratedValue
      *
      * @Type("integer")
-     * 
+     *
      * @var integer
      */
     protected $id;
 
     /**
      * The name of the File
-     * 
-     * @ORM\Column(type="string") 
+     *
+     * @ORM\Column(type="string")
      *
      * @Type("string")
-     * 
+     *
      * @var string
      */
     protected $name;
 
     /**
      * The description of the File
-     * 
-     * @ORM\Column(type="string") 
+     *
+     * @ORM\Column(type="string")
      *
      * @Type("string")
-     * 
+     *
      * @var string
      */
     protected $description;
 
     /**
      * The link to this file
-     * 
-     * @ORM\Column(type="string") 
+     *
+     * @ORM\Column(type="string")
      *
      * @Type("string")
-     * 
+     *
      * @var string
      */
     protected $link;
@@ -65,18 +64,18 @@ class File {
      * @ORM\Column(type="string")
      *
      * @Type("string")
-     * 
+     *
      * @var string
      */
     protected $localPath;
 
     /**
      * The link to a thumbnail of this file
-     * 
-     * @ORM\Column(type="string", nullable=true) 
+     *
+     * @ORM\Column(type="string", nullable=true)
      *
      * @Type("string")
-     * 
+     *
      * @var string
      */
     protected $thumbnailLink;
@@ -87,52 +86,40 @@ class File {
      * @ORM\Column(type="string", nullable=true)
      *
      * @Type("string")
-     * 
+     *
      * @var string
      */
     protected $localThumbnailPath;
 
     /**
-     * File category
-     *
-     * @ORM\ManyToOne(targetEntity="FileCategory")
-     *
-     * @Type("rmatil\CmsBundle\Entity\FileCategory")
-     * @MaxDepth(1)
-     * 
-     * @var \rmatil\CmsBundle\Entity\FileCategory
-     */
-    protected $category;
-
-    /**
      * The files extension
-     * 
-     * @ORM\Column(type="string") 
+     *
+     * @ORM\Column(type="string")
      *
      * @Type("string")
-     * 
+     *
      * @var string
      */
     protected $extension;
 
     /**
      * The size of the event in bytes
-     * 
-     * @ORM\Column(type="integer") 
+     *
+     * @ORM\Column(type="integer")
      *
      * @Type("integer")
-     * 
+     *
      * @var integer
      */
     protected $size;
 
     /**
      * The dimensions of this file, if present, as string
-     * 
-     * @ORM\Column(type="string") 
+     *
+     * @ORM\Column(type="string")
      *
      * @Type("string")
-     * 
+     *
      * @var string
      */
     protected $dimensions;
@@ -144,18 +131,18 @@ class File {
      *
      * @Type("rmatil\CmsBundle\Entity\User")
      * @MaxDepth(1)
-     * 
+     *
      * @var \rmatil\CmsBundle\Entity\User
      */
     protected $author;
 
     /**
      * DateTime object of the creation date
-     * 
+     *
      * @ORM\Column(type="datetime")
      *
      * @Type("DateTime<'Y-m-d\TH:i:sP', 'UTC'>")
-     * 
+     *
      * @var \DateTime
      */
     protected $creationDate;
@@ -172,7 +159,7 @@ class File {
     /**
      * Sets the The id of the File.
      *
-     * @return string
+     * @param $id integer
      */
     public function setId($id) {
         $this->id = $id;
@@ -287,24 +274,6 @@ class File {
     }
 
     /**
-     * Gets the File category.
-     *
-     * @return \rmatil\CmsBundle\Entity\FileCategory
-     */
-    public function getCategory() {
-        return $this->category;
-    }
-
-    /**
-     * Sets the File category.
-     *
-     * @param \rmatil\CmsBundle\Entity\FileCategory $category the category
-     */
-    public function setCategory(FileCategory $category = null) {
-        $this->category = $category;
-    }
-
-    /**
      * Gets the The files extension.
      *
      * @return string
@@ -392,20 +361,5 @@ class File {
      */
     public function setCreationDate(\DateTime $creationDate = null) {
         $this->creationDate = $creationDate;
-    }
-
-    public function update(File $file) {
-        $this->setName($file->getName());
-        $this->setDescription($file->getDescription());
-        $this->setLink($file->getLink());
-        $this->setLocalPath($file->getLocalPath());
-        $this->setThumbnailLink($file->getThumbnailLink());
-        $this->setLocalThumbnailPath($file->getLocalThumbnailPath());
-        $this->setCategory($file->getCategory());
-        $this->setExtension($file->getExtension());
-        $this->setSize($file->getSize());
-        $this->setDimensions($file->getDimensions());
-        $this->setAuthor($file->getAuthor());
-        $this->setCreationDate($file->getCreationDate());
     }
 }
