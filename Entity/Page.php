@@ -77,26 +77,6 @@ class Page {
     protected $articles;
 
     /**
-     * Indicates whether this page should show
-     * its articles as subnavigation
-     *
-     * @ORM\Column(type="boolean")
-     *
-     * @var boolean
-     */
-    protected $hasSubnavigation = false;
-
-    /**
-     * Indicates whether this page is locked
-     * for editing or not
-     *
-     * @ORM\ManyToOne(targetEntity="User", cascade="persist")
-     *
-     * @var \rmatil\CmsBundle\Entity\User
-     */
-    protected $isLockedBy;
-
-    /**
      * Indicates whether the page should be published or not
      *
      * @ORM\Column(type="boolean")
@@ -274,42 +254,6 @@ class Page {
      */
     public function setArticles(ArrayCollection $articles = null) {
         $this->articles = $articles;
-    }
-
-    /**
-     * Gets the Indicates whether this page should show its articles as subnavigation.
-     *
-     * @return boolean
-     */
-    public function getHasSubnavigation() {
-        return $this->hasSubnavigation;
-    }
-
-    /**
-     * Sets the Indicates whether this page should show its articles as subnavigation.
-     *
-     * @param boolean $hasSubnavigation the has subnavigation
-     */
-    public function setHasSubnavigation($hasSubnavigation) {
-        $this->hasSubnavigation = $hasSubnavigation;
-    }
-
-    /**
-     * Gets the Indicates whether this page is locked for editing or not.
-     *
-     * @return \rmatil\CmsBundle\Entity\User
-     */
-    public function getIsLockedBy() {
-        return $this->isLockedBy;
-    }
-
-    /**
-     * Sets the Indicates whether this page is locked for editing or not.
-     *
-     * @param \rmatil\CmsBundle\Entity\User $isLockedBy the is locked
-     */
-    public function setIsLockedBy(User $isLockedBy = null) {
-        $this->isLockedBy = $isLockedBy;
     }
 
     /**
