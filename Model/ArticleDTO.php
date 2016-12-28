@@ -249,7 +249,7 @@ class ArticleDTO {
     /**
      * @return boolean
      */
-    public function isIsPublished(): bool {
+    public function isPublished(): bool {
         return $this->isPublished;
     }
 

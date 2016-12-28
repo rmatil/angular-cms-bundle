@@ -113,8 +113,6 @@ class PageMapper extends AbstractMapper {
         }
         $page->setArticles($articles);
 
-        $page->setHasSubnavigation($pageDto->isHasSubnavigation());
-        $page->setIsLockedBy($this->userMapper->dtoToEntity($pageDto->getIsLockedBy()));
         $page->setIsPublished($pageDto->isIsPublished());
 
         if (null !== $pageDto->getLastEditDate()) {

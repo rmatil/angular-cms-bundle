@@ -35,35 +35,15 @@ class ArticleMapper extends AbstractMapper {
         $articleDto = new ArticleDTO();
         $articleDto->setId($article->getId());
         $articleDto->setUrlName($article->getUrlName());
-
-        if (null !== $article->getCategory()) {
-            $articleDto->setCategory($this->articleCategoryMapper->entityToDto($article->getCategory()));
-        }
-
-        if (null !== $article->getAuthor()) {
-            $articleDto->setAuthor($this->userMapper->entityToDto($article->getAuthor()));
-        }
-
-        if (null !== $article->getLanguage()) {
-            $articleDto->setLanguage($this->languageMapper->entityToDto($article->getLanguage()));
-        }
-
+        $articleDto->setCategory($this->articleCategoryMapper->entityToDto($article->getCategory()));
+        $articleDto->setAuthor($this->userMapper->entityToDto($article->getAuthor()));
+        $articleDto->setLanguage($this->languageMapper->entityToDto($article->getLanguage()));
         $articleDto->setTitle($article->getTitle());
         $articleDto->setContent($article->getContent());
-
-        if (null !== $article->getLastEditDate()) {
-            $articleDto->setLastEditDate($article->getLastEditDate());
-        }
-
-        if (null !== $article->getCreationDate()) {
-            $articleDto->setCreationDate($article->getCreationDate());
-        }
-
+        $articleDto->setLastEditDate($article->getLastEditDate());
+        $articleDto->setCreationDate($article->getCreationDate());
         $articleDto->setIsPublished($article->getIsPublished());
-
-        if (null !== $article->getAllowedUserGroup()) {
-            $articleDto->setAllowedUserGroup($this->userGroupMapper->entityToDto($article->getAllowedUserGroup()));
-        }
+        $articleDto->setAllowedUserGroup($this->userGroupMapper->entityToDto($article->getAllowedUserGroup()));
 
         return $articleDto;
     }
@@ -80,36 +60,15 @@ class ArticleMapper extends AbstractMapper {
         $article = new Article();
         $article->setId($articleDto->getId());
         $article->setUrlName($articleDto->getUrlName());
-
-        if (null !== $articleDto->getCategory()) {
-            $article->setCategory($this->articleCategoryMapper->dtoToEntity($articleDto->getCategory()));
-        }
-
-        if (null !== $articleDto->getAuthor()) {
-            $article->setAuthor($this->userMapper->dtoToEntity($articleDto->getAuthor()));
-        }
-
-        if (null !== $articleDto->getLanguage()) {
-            $article->setLanguage($this->languageMapper->dtoToEntity($articleDto->getLanguage()));
-        }
-
+        $article->setCategory($this->articleCategoryMapper->dtoToEntity($articleDto->getCategory()));
+        $article->setAuthor($this->userMapper->dtoToEntity($articleDto->getAuthor()));
+        $article->setLanguage($this->languageMapper->dtoToEntity($articleDto->getLanguage()));
         $article->setTitle($articleDto->getTitle());
         $article->setContent($articleDto->getContent());
-
-        if (null !== $articleDto->getLastEditDate()) {
-            $article->setLastEditDate($articleDto->getLastEditDate());
-        }
-
-        if (null !== $articleDto->getCreationDate()) {
-            $article->setCreationDate($articleDto->getCreationDate());
-        }
-
-        $article->setIsPublished($articleDto->isIsPublished());
-
-
-        if (null !== $articleDto->getAllowedUserGroup()) {
-            $article->setAllowedUserGroup($this->userGroupMapper->dtoToEntity($articleDto->getAllowedUserGroup()));
-        }
+        $article->setLastEditDate($articleDto->getLastEditDate());
+        $article->setCreationDate($articleDto->getCreationDate());
+        $article->setIsPublished($articleDto->isPublished());
+        $article->setAllowedUserGroup($this->userGroupMapper->dtoToEntity($articleDto->getAllowedUserGroup()));
 
 
         return $article;

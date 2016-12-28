@@ -25,7 +25,7 @@ class UserDTO {
      *
      * @var string
      */
-    protected $firstName = '';
+    protected $firstName;
 
     /**
      * Lastname of the user
@@ -34,7 +34,7 @@ class UserDTO {
      *
      * @var string
      */
-    protected $lastName = '';
+    protected $lastName;
 
     /**
      * Phone number of the user
@@ -89,7 +89,7 @@ class UserDTO {
      *
      * @var string
      */
-    protected $email = '';
+    protected $email;
 
     /**
      * Whether the user is locked
