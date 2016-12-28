@@ -127,8 +127,6 @@ class Article implements IRestrictable {
 
     public function __construct() {
         $this->content = '';
-        $this->creationDate = new DateTime();
-        $this->lastEditDate = new DateTime();
         $this->urlName = '';
         $this->title = '';
         $this->isPublished = true;
