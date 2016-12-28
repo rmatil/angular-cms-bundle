@@ -8,31 +8,48 @@ use DateTime;
 use DateTimeZone;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\DBAL\DBALException;
+use Doctrine\ORM\EntityManagerInterface;
+use Psr\Log\LoggerInterface;
 use rmatil\CmsBundle\Constants\EntityNames;
-use rmatil\CmsBundle\Controller\UpdateUserGroupTrait;
-use rmatil\CmsBundle\Entities\Language;
-use rmatil\CmsBundle\Entities\Page;
-use rmatil\CmsBundle\Entities\PageCategory;
+use rmatil\CmsBundle\Entity\Language;
 use rmatil\CmsBundle\Exception\EntityInvalidException;
 use rmatil\CmsBundle\Exception\EntityNotDeletedException;
 use rmatil\CmsBundle\Exception\EntityNotFoundException;
 use rmatil\CmsBundle\Exception\EntityNotInsertedException;
 use rmatil\CmsBundle\Exception\EntityNotUpdatedException;
+use rmatil\CmsBundle\Mapper\PageMapper;
+use rmatil\CmsBundle\Model\PageDTO;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class PageDataAccessor extends DataAccessor {
 
-    use UpdateUserGroupTrait;
+    /**
+     * @var PageMapper
+     */
+    protected $pageMapper;
 
-    public function __construct($em, $logger) {
-        parent::__construct(EntityNames::PAGE, $em, $logger);
+    public function __construct(EntityManagerInterface $em, PageMapper $pageMapper, TokenStorageInterface $tokenStorage, LoggerInterface $logger) {
+        parent::__construct(EntityNames::PAGE, $em, $tokenStorage, $logger);
+
+        $this->pageMapper = $pageMapper;
     }
 
-    public function update($page) {
-        if ( ! ($page instanceof Page)) {
-            throw new EntityInvalidException(sprintf('Required object of type "%s" but got "%s"', EntityNames::PAGE, get_class($page)));
+    public function getAll() {
+        return $this->pageMapper->entitiesToDtos(parent::getAll());
+    }
+
+    public function getById($id) {
+        return $this->pageMapper->entityToDto(parent::getById($id));
+    }
+
+    public function update($pageDto) {
+        if ( ! ($pageDto instanceof PageDTO)) {
+            throw new EntityInvalidException(sprintf('Required object of type "%s" but got "%s"', PageDTO::class, get_class($pageDto)));
         }
 
-        /** @var \rmatil\CmsBundle\Entities\Page $dbPage */
+        $page = $this->pageMapper->dtoToEntity($pageDto);
+
+        /** @var \rmatil\CmsBundle\Entity\Page $dbPage */
         $dbPage = $this->em->getRepository(EntityNames::PAGE)->find($page->getId());
 
         if (null === $dbPage) {
@@ -45,15 +62,12 @@ class PageDataAccessor extends DataAccessor {
             );
         }
 
-        if ($page->getCategory() instanceof PageCategory) {
-            $page->setCategory(
-                $this->em->getRepository(EntityNames::PAGE_CATEGORY)->find($page->getCategory()->getId())
-            );
-        }
-
-        $allUserGroups = $this->em->getRepository(EntityNames::USER_GROUP)->findAll();
-
-        $this->updateUserGroups($allUserGroups, $page, $dbPage);
+        // author is current logged in user
+        $page->setAuthor(
+            $this->em->getRepository(EntityNames::USER)->findOneBy(
+                ['username' => $this->tokenStorage->getToken()->getUsername()]
+            )
+        );
 
         // remove all articles, then add only these who are checked
         foreach ($dbPage->getArticles()->toArray() as $article) {
@@ -62,33 +76,25 @@ class PageDataAccessor extends DataAccessor {
         }
         $dbPage->setArticles(null);
 
-        try {
-            $this->em->flush();
-        } catch (DBALException $dbalex) {
-            $this->logger->error($dbalex);
-
-            throw new EntityNotUpdatedException($dbalex->getMessage());
-        }
-
+        $dbArticles = new ArrayCollection();
         if (null !== $page->getArticles()) {
-            $dbArticles = new ArrayCollection();
-            foreach ($page->getArticles()->toArray() as $article) {
+            foreach ($page->getArticles() as $article) {
                 $dbArticle = $this->em->getRepository(EntityNames::ARTICLE)->find($article->getId());
 
-                $dbArticle->setPage($dbPage);
-                $dbArticles->add($dbArticle);
+                if (null !== $dbArticle) {
+                    $dbArticle->setPage($dbPage);
+                    $dbArticles->add($dbArticle);
+                }
             }
-            $dbPage->setArticles($dbArticles);
         }
+        $dbPage->setArticles($dbArticles);
 
         // Note: we prevent updating title and url name due to the uniqid
         // stored in url-name. Otherwise, permanent links would fail
         $dbPage->setAuthor($page->getAuthor());
-        $dbPage->setCategory($page->getCategory());
         $dbPage->setLanguage($page->getLanguage());
         $dbPage->setParent($page->getParent());
         $dbPage->setCreationDate($page->getCreationDate());
-        $dbPage->setHasSubnavigation($page->getHasSubnavigation());
         $dbPage->setIsPublished($page->getIsPublished());
         $dbPage->setLastEditDate($page->getLastEditDate());
         $dbPage->setIsStartPage($page->getIsStartPage());
@@ -96,6 +102,15 @@ class PageDataAccessor extends DataAccessor {
         $now = new DateTime('now', new DateTimeZone("UTC"));
         $dbPage->setLastEditDate($now);
 
+        $allowedUserGroup = $page->getAllowedUserGroup();
+        if (null !== $allowedUserGroup) {
+            $dbPage->setAllowedUserGroup(
+                $this->em->getRepository(EntityNames::USER_GROUP)->find($page->getAllowedUserGroup()->getId())
+            );
+        } else {
+            $dbPage->setAllowedUserGroup(null);
+        }
+
         try {
             $this->em->flush();
         } catch (DBALException $dbalex) {
@@ -104,13 +119,22 @@ class PageDataAccessor extends DataAccessor {
             throw new EntityNotUpdatedException($dbalex->getMessage());
         }
 
-        return $dbPage;
+        return $this->pageMapper->entityToDto($dbPage);
     }
 
-    public function insert($page) {
-        if ( ! ($page instanceof Page)) {
-            throw new EntityInvalidException(sprintf('Required object of type "%s" but got "%s"', EntityNames::PAGE, get_class($page)));
+    public function insert($pageDto) {
+        if ( ! ($pageDto instanceof PageDTO)) {
+            throw new EntityInvalidException(sprintf('Required object of type "%s" but got "%s"', PageDTO::class, get_class($pageDto)));
         }
+
+        $page = $this->pageMapper->dtoToEntity($pageDto);
+
+        // author is current logged in user
+        $page->setAuthor(
+            $this->em->getRepository(EntityNames::USER)->findOneBy(
+                ['username' => $this->tokenStorage->getToken()->getUsername()]
+            )
+        );
 
         if ($page->getLanguage() instanceof Language) {
             $page->setLanguage(
@@ -118,29 +142,31 @@ class PageDataAccessor extends DataAccessor {
             );
         }
 
-        if ($page->getCategory() instanceof PageCategory) {
-            $page->setCategory(
-                $this->em->getRepository(EntityNames::PAGE_CATEGORY)->find($page->getCategory()->getId())
-            );
-        }
-
-        $allUserGroups = $this->em->getRepository(EntityNames::USER_GROUP)->findAll();
-        $this->insertUserGroups($allUserGroups, $page);
-
         $origArticles = new ArrayCollection();
         $articleRepository = $this->em->getRepository(EntityNames::ARTICLE);
         // get origArticles
-        foreach ($page->getArticles()->toArray() as $article) {
-            /** @var \rmatil\CmsBundle\Entities\Article $origArticle */
-            $origArticle = $articleRepository->findOneBy(array('id' => $article->getId()));
-            $origArticle->setPage($page);
-            $origArticles->add($origArticle);
+        if (null !== $page->getArticles()) {
+            foreach ($page->getArticles() as $article) {
+                /** @var \rmatil\CmsBundle\Entity\Article $origArticle */
+                $origArticle = $articleRepository->findOneBy(['id' => $article->getId()]);
+                if (null !== $origArticle) {
+                    $origArticle->setPage($page);
+                    $origArticles->add($origArticle);
+                }
+            }
         }
         $page->setArticles($origArticles);
 
         $now = new DateTime('now', new DateTimeZone('UTC'));
         $page->setLastEditDate($now);
         $page->setCreationDate($now);
+
+        $allowedUserGroup = $page->getAllowedUserGroup();
+        if (null !== $allowedUserGroup) {
+            $page->setAllowedUserGroup(
+                $this->em->getRepository(EntityNames::USER_GROUP)->find($page->getAllowedUserGroup()->getId())
+            );
+        }
 
         $uniqid = uniqid();
         $page->setUrlName(sprintf('%s-%s', $page->getUrlName(), $uniqid));
@@ -155,7 +181,7 @@ class PageDataAccessor extends DataAccessor {
             throw new EntityNotInsertedException(sprintf('Could not insert entity "%s"', $this->entityName));
         }
 
-        return $page;
+        return $this->pageMapper->entityToDto($page);
     }
 
     public function delete($id) {
