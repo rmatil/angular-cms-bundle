@@ -29,14 +29,8 @@ class UserMapper extends AbstractMapper {
         $userDto->setZipCode($user->getZipCode());
         $userDto->setPlace($user->getPlace());
         $userDto->setEmail($user->getEmail());
-        $userDto->setIsLocked($user->isLocked());
-        $userDto->setIsExpired($user->isExpired());
-        $userDto->setIsExpired($user->isEnabled());
-
-        if (null !== $user->getLastLogin()) {
-            $userDto->setLastLoginDate($user->getLastLogin());
-        }
-
+        $userDto->setIsEnabled($user->isEnabled());
+        $userDto->setLastLoginDate($user->getLastLogin());
         $userDto->setRoles($user->getRoles());
 
         return $userDto;
@@ -61,14 +55,9 @@ class UserMapper extends AbstractMapper {
         $user->setZipCode($userDto->getZipCode());
         $user->setPlace($userDto->getPlace());
         $user->setEmail($userDto->getEmail());
-        $user->setLocked($userDto->isLocked());
-        $user->setExpired($userDto->isExpired());
-        $user->setExpired($userDto->isEnabled());
-
-        if (null !== $userDto->getLastLoginDate()) {
-            $user->setLastLogin($userDto->getLastLoginDate());
-        }
-
+        $user->setIsAccountLocked($userDto->isLocked());
+        $user->setEnabled($userDto->isEnabled());
+        $user->setLastLogin($userDto->getLastLoginDate());
         $user->setRoles($userDto->getRoles());
 
         return $user;

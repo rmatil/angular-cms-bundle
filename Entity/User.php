@@ -104,6 +104,17 @@ class User extends BaseUser {
      */
     protected $place;
 
+    /**
+     * Indicates whether the user is locked.
+     * Note, that this field is mapped directly to the FOSUser locked
+     * field specified in the database
+     *
+     * @ORM\Column(type="boolean", name="locked")
+     *
+     * @var bool
+     */
+    protected $locked;
+
     public function __construct() {
         parent::__construct();
     }
@@ -250,6 +261,14 @@ class User extends BaseUser {
      */
     public function setPlace($place) {
         $this->place = $place;
+    }
+
+    public function isAccountNonLocked() {
+        return ! $this->locked;
+    }
+
+    public function setIsAccountLocked($isLocked) {
+        $this->locked = $isLocked;
     }
 
     public function update(User $user) {
