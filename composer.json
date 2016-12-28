@@ -35,6 +35,6 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "autoload": {
-        "psr-4": { "rmatil\\CmsBundle": "" }
+        "psr-4": { "rmatil\\CmsBundle\\": "" }
     }
 }
