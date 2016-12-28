@@ -41,9 +41,11 @@ class PageMapper extends AbstractMapper {
         }
 
         $articleDtos = new ArrayCollection();
-        foreach ($page->getArticles() as $article) {
-            $articleDto = $this->articleMapper->entityToDto($article);
-            $articleDtos->add($articleDto);
+        if (null !== $page->getArticles()) {
+            foreach ($page->getArticles() as $article) {
+                $articleDto = $this->articleMapper->entityToDto($article);
+                $articleDtos->add($articleDto);
+            }
         }
         $pageDto->setArticles($articleDtos);
 
@@ -73,9 +75,11 @@ class PageMapper extends AbstractMapper {
         }
 
         $articles = new ArrayCollection();
-        foreach ($pageDto->getArticles() as $articleDTO) {
-            $article = $this->articleMapper->dtoToEntity($articleDTO);
-            $articles->add($article);
+        if (null !== $pageDto->getArticles()) {
+            foreach ($pageDto->getArticles() as $articleDTO) {
+                $article = $this->articleMapper->dtoToEntity($articleDTO);
+                $articles->add($article);
+            }
         }
         $page->setArticles($articles);
 
