@@ -1,5 +1,5 @@
 {
-    "name": "rmatil/cms-bundle",
+    "name": "rmatil/angular-cms-bundle",
     "license": "MIT",
     "description": "A content management system for Symfony 3",
     "keywords": ["content management system", "cms", "symfony"],
