@@ -151,14 +151,14 @@ class ArticleDTO {
     /**
      * @return ArticleCategoryDTO
      */
-    public function getCategory(): ArticleCategoryDTO {
+    public function getCategory() {
         return $this->category;
     }
 
     /**
      * @param ArticleCategoryDTO $category
      */
-    public function setCategory(ArticleCategoryDTO $category) {
+    public function setCategory(ArticleCategoryDTO $category = null) {
         $this->category = $category;
     }
 
@@ -172,7 +172,7 @@ class ArticleDTO {
     /**
      * @param UserDTO $author
      */
-    public function setAuthor(UserDTO $author) {
+    public function setAuthor(UserDTO $author = null) {
         $this->author = $author;
     }
 
@@ -186,7 +186,7 @@ class ArticleDTO {
     /**
      * @param LanguageDTO $language
      */
-    public function setLanguage(LanguageDTO $language) {
+    public function setLanguage(LanguageDTO $language = null) {
         $this->language = $language;
     }
 
@@ -221,28 +221,28 @@ class ArticleDTO {
     /**
      * @return DateTime
      */
-    public function getLastEditDate(): DateTime {
+    public function getLastEditDate() {
         return $this->lastEditDate;
     }
 
     /**
      * @param DateTime $lastEditDate
      */
-    public function setLastEditDate(DateTime $lastEditDate) {
+    public function setLastEditDate(DateTime $lastEditDate = null) {
         $this->lastEditDate = $lastEditDate;
     }
 
     /**
      * @return DateTime
      */
-    public function getCreationDate(): DateTime {
+    public function getCreationDate() {
         return $this->creationDate;
     }
 
     /**
      * @param DateTime $creationDate
      */
-    public function setCreationDate(DateTime $creationDate) {
+    public function setCreationDate(DateTime $creationDate = null) {
         $this->creationDate = $creationDate;
     }
 
@@ -270,7 +270,7 @@ class ArticleDTO {
     /**
      * @param UserGroupDTO $allowedUserGroup
      */
-    public function setAllowedUserGroup(UserGroupDTO $allowedUserGroup) {
+    public function setAllowedUserGroup(UserGroupDTO $allowedUserGroup = null) {
         $this->allowedUserGroup = $allowedUserGroup;
     }
 

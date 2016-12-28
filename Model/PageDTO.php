@@ -79,27 +79,6 @@ class PageDTO {
     protected $articles;
 
     /**
-     * Indicates whether this page should show
-     * its articles as sub-navigation
-     *
-     * @Type("boolean")
-     *
-     * @var boolean
-     */
-    protected $hasSubnavigation = false;
-
-    /**
-     * Indicates whether this page is locked
-     * for editing or not
-     *
-     * @Type("rmatil\CmsBundle\Model\UserDTO")
-     * @MaxDepth(1)
-     *
-     * @var UserDTO
-     */
-    protected $isLockedBy;
-
-    /**
      * Indicates whether the page should be published or not
      *
      * @Type("boolean")
@@ -154,127 +133,99 @@ class PageDTO {
     /**
      * @return int
      */
-    public function getId(): int {
+    public function getId() {
         return $this->id;
     }
 
     /**
      * @param int $id
      */
-    public function setId(int $id) {
+    public function setId($id) {
         $this->id = $id;
     }
 
     /**
      * @return string
      */
-    public function getUrlName(): string {
+    public function getUrlName() {
         return $this->urlName;
     }
 
     /**
      * @param string $urlName
      */
-    public function setUrlName(string $urlName) {
+    public function setUrlName($urlName) {
         $this->urlName = $urlName;
     }
 
     /**
      * @return UserDTO
      */
-    public function getAuthor(): UserDTO {
+    public function getAuthor() {
         return $this->author;
     }
 
     /**
      * @param UserDTO $author
      */
-    public function setAuthor(UserDTO $author) {
+    public function setAuthor(UserDTO $author = null) {
         $this->author = $author;
     }
 
     /**
      * @return LanguageDTO
      */
-    public function getLanguage(): LanguageDTO {
+    public function getLanguage() {
         return $this->language;
     }
 
     /**
      * @param LanguageDTO $language
      */
-    public function setLanguage(LanguageDTO $language) {
+    public function setLanguage(LanguageDTO $language = null) {
         $this->language = $language;
     }
 
     /**
      * @return string
      */
-    public function getTitle(): string {
+    public function getTitle() {
         return $this->title;
     }
 
     /**
      * @param string $title
      */
-    public function setTitle(string $title) {
+    public function setTitle(string $title = null) {
         $this->title = $title;
     }
 
     /**
      * @return \rmatil\CmsBundle\Model\PageDTO
      */
-    public function getParent(): PageDTO {
+    public function getParent() {
         return $this->parent;
     }
 
     /**
      * @param \rmatil\CmsBundle\Model\PageDTO $parent
      */
-    public function setParent(PageDTO $parent) {
+    public function setParent(PageDTO $parent = null) {
         $this->parent = $parent;
     }
 
     /**
-     * @return array
+     * @return ArrayCollection
      */
-    public function getArticles(): array {
+    public function getArticles(): ArrayCollection {
         return $this->articles;
     }
 
     /**
      * @param ArrayCollection $articles
      */
-    public function setArticles(ArrayCollection $articles) {
+    public function setArticles(ArrayCollection $articles = null) {
         $this->articles = $articles;
-    }
-
-    /**
-     * @return boolean
-     */
-    public function isHasSubnavigation(): bool {
-        return $this->hasSubnavigation;
-    }
-
-    /**
-     * @param boolean $hasSubnavigation
-     */
-    public function setHasSubnavigation(bool $hasSubnavigation) {
-        $this->hasSubnavigation = $hasSubnavigation;
-    }
-
-    /**
-     * @return UserDTO
-     */
-    public function getIsLockedBy(): UserDTO {
-        return $this->isLockedBy;
-    }
-
-    /**
-     * @param UserDTO $isLockedBy
-     */
-    public function setIsLockedBy(UserDTO $isLockedBy) {
-        $this->isLockedBy = $isLockedBy;
     }
 
     /**
@@ -294,28 +245,28 @@ class PageDTO {
     /**
      * @return \DateTime
      */
-    public function getLastEditDate(): \DateTime {
+    public function getLastEditDate() {
         return $this->lastEditDate;
     }
 
     /**
      * @param \DateTime $lastEditDate
      */
-    public function setLastEditDate(\DateTime $lastEditDate) {
+    public function setLastEditDate($lastEditDate) {
         $this->lastEditDate = $lastEditDate;
     }
 
     /**
      * @return \DateTime
      */
-    public function getCreationDate(): \DateTime {
+    public function getCreationDate() {
         return $this->creationDate;
     }
 
     /**
      * @param \DateTime $creationDate
      */
-    public function setCreationDate(\DateTime $creationDate) {
+    public function setCreationDate($creationDate) {
         $this->creationDate = $creationDate;
     }
 

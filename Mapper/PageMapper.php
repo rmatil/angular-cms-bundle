@@ -25,10 +25,6 @@ class PageMapper extends AbstractMapper {
     }
 
     public function entityToDto($page) {
-        if (null !== $page) {
-            return null;
-        }
-
         if ( ! ($page instanceof Page)) {
             throw new MapperException(sprintf('Required object of type "%s" but got "%s"', Page::class, get_class($page)));
         }
@@ -36,15 +32,8 @@ class PageMapper extends AbstractMapper {
         $pageDto = new PageDTO();
         $pageDto->setId($page->getId());
         $pageDto->setUrlName($page->getUrlName());
-
-        if (null !== $page->getAuthor()) {
-            $pageDto->setAuthor($this->userMapper->entityToDto($page->getAuthor()));
-        }
-
-        if (null !== $page->getLanguage()) {
-            $pageDto->setLanguage($this->languageMapper->entityToDto($page->getLanguage()));
-        }
-
+        $pageDto->setAuthor($this->userMapper->entityToDto($page->getAuthor()));
+        $pageDto->setLanguage($this->languageMapper->entityToDto($page->getLanguage()));
         $pageDto->setTitle($page->getTitle());
 
         if (null !== $page->getParent()) {
@@ -58,32 +47,16 @@ class PageMapper extends AbstractMapper {
         }
         $pageDto->setArticles($articleDtos);
 
-        $pageDto->setHasSubnavigation($page->getHasSubnavigation());
-        $pageDto->setIsLockedBy($this->userMapper->entityToDto($page->getIsLockedBy()));
         $pageDto->setIsPublished($page->getIsPublished());
-
-        if (null !== $page->getLastEditDate()) {
-            $pageDto->setLastEditDate($page->getLastEditDate());
-        }
-
-        if (null !== $page->getCreationDate()) {
-            $pageDto->setCreationDate($page->getCreationDate());
-        }
-
-        if (null !== $page->getAllowedUserGroup()) {
-            $pageDto->setAllowedUserGroup($this->userGroupMapper->entityToDto($page->getAllowedUserGroup()));
-        }
-
+        $pageDto->setLastEditDate($page->getLastEditDate());
+        $pageDto->setCreationDate($page->getCreationDate());
+        $pageDto->setAllowedUserGroup($this->userGroupMapper->entityToDto($page->getAllowedUserGroup()));
         $pageDto->setIsStartPage($page->getIsStartPage());
 
         return $pageDto;
     }
 
     public function dtoToEntity($pageDto) {
-        if (null === $pageDto) {
-            return null;
-        }
-
         if ( ! ($pageDto instanceof PageDTO)) {
             throw new MapperException(sprintf('Required object of type "%s" but got "%s"', PageDTO::class, get_class($pageDto)));
         }
@@ -91,15 +64,8 @@ class PageMapper extends AbstractMapper {
         $page = new Page();
         $page->setId($pageDto->getId());
         $page->setUrlName($pageDto->getUrlName());
-
-        if (null !== $pageDto->getAuthor()) {
-            $page->setAuthor($this->userMapper->dtoToEntity($pageDto->getAuthor()));
-        }
-
-        if (null !== $pageDto->getLanguage()) {
-            $page->setLanguage($this->languageMapper->dtoToEntity($pageDto->getLanguage()));
-        }
-
+        $page->setAuthor($this->userMapper->dtoToEntity($pageDto->getAuthor()));
+        $page->setLanguage($this->languageMapper->dtoToEntity($pageDto->getLanguage()));
         $page->setTitle($pageDto->getTitle());
 
         if (null !== $pageDto->getParent()) {
@@ -114,19 +80,9 @@ class PageMapper extends AbstractMapper {
         $page->setArticles($articles);
 
         $page->setIsPublished($pageDto->isIsPublished());
-
-        if (null !== $pageDto->getLastEditDate()) {
-            $page->setLastEditDate($pageDto->getLastEditDate());
-        }
-
-        if (null !== $pageDto->getCreationDate()) {
-            $page->setCreationDate($pageDto->getCreationDate());
-        }
-
-        if (null !== $pageDto->getAllowedUserGroup()) {
-            $page->setAllowedUserGroup($this->userGroupMapper->dtoToEntity($pageDto->getAllowedUserGroup()));
-        }
-
+        $page->setLastEditDate($pageDto->getLastEditDate());
+        $page->setCreationDate($pageDto->getCreationDate());
+        $page->setAllowedUserGroup($this->userGroupMapper->dtoToEntity($pageDto->getAllowedUserGroup()));
         $page->setIsStartPage($pageDto->isIsStartPage());
 
         return $page;
