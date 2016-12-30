@@ -109,7 +109,7 @@ class User extends BaseUser {
      * Note, that this field is mapped directly to the FOSUser locked
      * field specified in the database
      *
-     * @ORM\Column(type="boolean", name="locked")
+     * @ORM\Column(type="boolean", name="locked", options={"default":false})
      *
      * @var bool
      */
