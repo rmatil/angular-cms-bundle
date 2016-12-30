@@ -107,13 +107,16 @@ class User extends BaseUser {
     /**
      * Indicates whether the user is locked.
      * Note, that this field is mapped directly to the FOSUser locked
-     * field specified in the database
+     * field specified in the database.
      *
-     * @ORM\Column(type="boolean", name="locked", options={"default":false})
+     * Note, this field has to have a default value since otherwise
+     * fos:user:create will fail.
+     *
+     * @ORM\Column(type="boolean", name="locked")
      *
      * @var bool
      */
-    protected $locked;
+    protected $locked = false;
 
     public function __construct() {
         parent::__construct();
