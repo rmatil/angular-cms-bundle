@@ -11,9 +11,8 @@ use rmatil\CmsBundle\Entity\ArticleCategory;
 use rmatil\CmsBundle\Entity\Language;
 use rmatil\CmsBundle\Entity\Page;
 use rmatil\CmsBundle\Entity\User;
-use rmatil\CmsBundle\Entity\UserGroup;
 
-class ArticleTest extends PHPUnit_Framework_TestCase  {
+class ArticleTest extends PHPUnit_Framework_TestCase {
 
     /**
      * @var Article
@@ -27,7 +26,7 @@ class ArticleTest extends PHPUnit_Framework_TestCase  {
     /**
      * @dataProvider dataProvider
      */
-    public function testAccessors($id, $urlName, $category, $author, $language, $title, $content, $lastEditDate, $creationDate, $isPublished, $page, $allowedUserGroup) {
+    public function testAccessors($id, $urlName, $category, $author, $language, $title, $content, $lastEditDate, $creationDate, $page) {
         self::$article->setId($id);
         self::$article->setUrlName($urlName);
         self::$article->setCategory($category);
@@ -37,9 +36,7 @@ class ArticleTest extends PHPUnit_Framework_TestCase  {
         self::$article->setContent($content);
         self::$article->setLastEditDate($lastEditDate);
         self::$article->setCreationDate($creationDate);
-        self::$article->setIsPublished($isPublished);
         self::$article->setPage($page);
-        self::$article->setAllowedUserGroup($allowedUserGroup);
 
         $this->assertEquals($id, self::$article->getId());
         $this->assertEquals($urlName, self::$article->getUrlName());
@@ -50,9 +47,7 @@ class ArticleTest extends PHPUnit_Framework_TestCase  {
         $this->assertEquals($content, self::$article->getContent());
         $this->assertEquals($lastEditDate, self::$article->getLastEditDate());
         $this->assertEquals($creationDate, self::$article->getCreationDate());
-        $this->assertEquals($isPublished, self::$article->getIsPublished());
         $this->assertEquals($page, self::$article->getPage());
-        $this->assertEquals($allowedUserGroup, self::$article->getAllowedUserGroup());
     }
 
     public function dataProvider() {
@@ -60,14 +55,13 @@ class ArticleTest extends PHPUnit_Framework_TestCase  {
         $author = new User();
         $language = new Language();
         $page = new Page();
-        $allowedUserGroup = new UserGroup();
 
         $yesterday = new DateTime('yesterday');
         $now = new DateTime('now');
 
         return [
-            [1, 'url-name', null, null, null, 'title', 'content', null, null, true, null, null],
-            [2, 'url-name-2', $category, $author, $language, 'title', 'content', $now, $yesterday, false, $page, $allowedUserGroup]
+            [1, 'url-name', null, null, null, 'title', 'content', null, null, null],
+            [2, 'url-name-2', $category, $author, $language, 'title', 'content', $now, $yesterday, $page]
         ];
     }
 }

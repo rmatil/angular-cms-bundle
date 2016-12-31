@@ -9,9 +9,7 @@ use PHPUnit_Framework_TestCase;
 use rmatil\CmsBundle\Entity\Article;
 use rmatil\CmsBundle\Entity\ArticleCategory;
 use rmatil\CmsBundle\Entity\Language;
-use rmatil\CmsBundle\Entity\Page;
 use rmatil\CmsBundle\Entity\User;
-use rmatil\CmsBundle\Entity\UserGroup;
 use rmatil\CmsBundle\Mapper\ArticleCategoryMapper;
 use rmatil\CmsBundle\Mapper\ArticleMapper;
 use rmatil\CmsBundle\Mapper\LanguageMapper;
@@ -21,7 +19,6 @@ use rmatil\CmsBundle\Model\ArticleCategoryDTO;
 use rmatil\CmsBundle\Model\ArticleDTO;
 use rmatil\CmsBundle\Model\LanguageDTO;
 use rmatil\CmsBundle\Model\UserDTO;
-use rmatil\CmsBundle\Model\UserGroupDTO;
 
 class ArticleMapperTest extends PHPUnit_Framework_TestCase {
 
@@ -81,8 +78,6 @@ class ArticleMapperTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals($entity->getContent(), $dto->getContent());
         $this->assertEquals($entity->getLastEditDate(), $dto->getLastEditDate());
         $this->assertEquals($entity->getCreationDate(), $dto->getCreationDate());
-        $this->assertEquals($entity->getIsPublished(), $dto->isPublished());
-        $this->assertEquals($this->userGroupMapper->entityToDto($entity->getAllowedUserGroup()), $dto->getAllowedUserGroup());
     }
 
     /**
@@ -102,8 +97,6 @@ class ArticleMapperTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals($dto->getContent(), $entity->getContent());
         $this->assertEquals($dto->getLastEditDate(), $entity->getLastEditDate());
         $this->assertEquals($dto->getCreationDate(), $entity->getCreationDate());
-        $this->assertEquals($dto->isPublished(), $entity->getIsPublished());
-        $this->assertEquals($dto->getAllowedUserGroup(), $this->userGroupMapper->entityToDto($entity->getAllowedUserGroup()));
     }
 
     public function entityProvider() {
@@ -117,9 +110,6 @@ class ArticleMapperTest extends PHPUnit_Framework_TestCase {
         $language = new Language();
         $language->setName('English');
 
-        $allowedUserGroup = new UserGroup();
-        $allowedUserGroup->setName('Member');
-
         $article = new Article();
         $article->setId(1);
         $article->setUrlName('url-name');
@@ -130,8 +120,6 @@ class ArticleMapperTest extends PHPUnit_Framework_TestCase {
         $article->setContent('content');
         $article->setLastEditDate(new DateTime());
         $article->setCreationDate(new DateTime());
-        $article->setIsPublished(false);
-        $article->setAllowedUserGroup($allowedUserGroup);
 
         return [
             [$article]
@@ -150,9 +138,6 @@ class ArticleMapperTest extends PHPUnit_Framework_TestCase {
         $langDto = new LanguageDTO();
         $langDto->setName('English DTO');
 
-        $allowedUserGroup = new UserGroupDTO();
-        $allowedUserGroup->setName('user group dto');
-
         $dto = new ArticleDTO();
         $dto->setId(1);
         $dto->setUrlName('url-name');
@@ -163,8 +148,6 @@ class ArticleMapperTest extends PHPUnit_Framework_TestCase {
         $dto->setContent('content');
         $dto->setLastEditDate(new DateTime());
         $dto->setCreationDate(new DateTime());
-        $dto->setIsPublished(false);
-        $dto->setAllowedUserGroup($allowedUserGroup);
 
         return [
             [$dto]

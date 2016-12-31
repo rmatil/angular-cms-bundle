@@ -96,25 +96,6 @@ class ArticleDTO {
      */
     protected $creationDate;
 
-    /**
-     * Indicates whether the article should be published or not
-     *
-     * @Type("boolean")
-     *
-     * @var boolean
-     */
-    protected $isPublished = false;
-
-    /**
-     * All user groups which are allowed to access this article
-     *
-     * @Type("rmatil\CmsBundle\Model\UserGroupDTO")
-     * @MaxDepth(1)
-     *
-     * @var UserGroupDTO
-     */
-    protected $allowedUserGroup;
-
     public function __construct() {
         $this->creationDate = new DateTime();
         $this->lastEditDate = new DateTime();
@@ -245,33 +226,4 @@ class ArticleDTO {
     public function setCreationDate(DateTime $creationDate = null) {
         $this->creationDate = $creationDate;
     }
-
-    /**
-     * @return boolean
-     */
-    public function isPublished(): bool {
-        return $this->isPublished;
-    }
-
-    /**
-     * @param boolean $isPublished
-     */
-    public function setIsPublished(bool $isPublished) {
-        $this->isPublished = $isPublished;
-    }
-
-    /**
-     * @return UserGroupDTO
-     */
-    public function getAllowedUserGroup() {
-        return $this->allowedUserGroup;
-    }
-
-    /**
-     * @param UserGroupDTO $allowedUserGroup
-     */
-    public function setAllowedUserGroup(UserGroupDTO $allowedUserGroup = null) {
-        $this->allowedUserGroup = $allowedUserGroup;
-    }
-
 }

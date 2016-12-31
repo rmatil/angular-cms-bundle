@@ -13,7 +13,6 @@ use rmatil\CmsBundle\Constants\EntityNames;
 use rmatil\CmsBundle\Entity\Article;
 use rmatil\CmsBundle\Entity\ArticleCategory;
 use rmatil\CmsBundle\Entity\Language;
-use rmatil\CmsBundle\Entity\User;
 use rmatil\CmsBundle\Exception\EntityInvalidException;
 use rmatil\CmsBundle\Exception\EntityNotFoundException;
 use rmatil\CmsBundle\Exception\EntityNotInsertedException;
@@ -77,23 +76,11 @@ class ArticleDataAccessor extends DataAccessor {
         // stored in url-name. Otherwise, permanent links would fail
         $dbArticle->setTitle($article->getTitle());
         $dbArticle->setContent($article->getContent());
-        $dbArticle->setIsPublished($article->getIsPublished());
         $dbArticle->setCategory($article->getCategory());
         $dbArticle->setAuthor($article->getAuthor());
         $dbArticle->setLanguage($article->getLanguage());
         $dbArticle->setCreationDate($article->getCreationDate());
         $dbArticle->setLastEditDate(new DateTime('now', new DateTimeZone('UTC')));
-
-
-        $allowedUserGroup = $article->getAllowedUserGroup();
-        if (null !== $allowedUserGroup) {
-            $dbArticle->setAllowedUserGroup(
-                $this->em->getRepository(EntityNames::USER_GROUP)->find($article->getAllowedUserGroup()->getId())
-            );
-        } else {
-            $dbArticle->setAllowedUserGroup(null);
-        }
-
 
         try {
             $this->em->flush();

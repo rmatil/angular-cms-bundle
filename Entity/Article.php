@@ -2,15 +2,13 @@
 
 namespace rmatil\CmsBundle\Entity;
 
-use DateTime;
 use Doctrine\ORM\Mapping as ORM;
-use rmatil\CmsBundle\Security\IRestrictable;
 
 /**
  * @ORM\Entity
  * @ORM\Table(name="articles")
  **/
-class Article implements IRestrictable {
+class Article {
 
     /**
      * Id of the article
@@ -98,15 +96,6 @@ class Article implements IRestrictable {
     protected $creationDate;
 
     /**
-     * Indicates whether the article should be published or not
-     *
-     * @ORM\Column(type="boolean")
-     *
-     * @var boolean
-     */
-    protected $isPublished = false;
-
-    /**
      * Page to which this article belongs
      *
      * @ORM\ManyToOne(targetEntity="Page", inversedBy="articles")
@@ -115,21 +104,10 @@ class Article implements IRestrictable {
      */
     protected $page;
 
-    /**
-     * All user groups which are allowed to access this article
-     *
-     * @ORM\ManyToOne(targetEntity="UserGroup")
-     *
-     * @var \rmatil\CmsBundle\Entity\UserGroup
-     */
-    protected $allowedUserGroup;
-
-
     public function __construct() {
         $this->content = '';
         $this->urlName = '';
         $this->title = '';
-        $this->isPublished = true;
     }
 
 
@@ -300,24 +278,6 @@ class Article implements IRestrictable {
     }
 
     /**
-     * Gets the Indicates whether the article should be published or not.
-     *
-     * @return boolean
-     */
-    public function getIsPublished() {
-        return $this->isPublished;
-    }
-
-    /**
-     * Sets the Indicates whether the article should be published or not.
-     *
-     * @param boolean $isPublished the is public
-     */
-    public function setIsPublished($isPublished) {
-        $this->isPublished = $isPublished;
-    }
-
-    /**
      * Gets the Page to which this article belongs.
      *
      * @return \rmatil\CmsBundle\Entity\Page
@@ -333,23 +293,5 @@ class Article implements IRestrictable {
      */
     public function setPage(Page $page = null) {
         $this->page = $page;
-    }
-
-    /**
-     * Get user group which is allowed to access this article
-     *
-     * @return UserGroup
-     */
-    public function getAllowedUserGroup() {
-        return $this->allowedUserGroup;
-    }
-
-    /**
-     * Sets the user group which is allowed to access this article.
-     *
-     * @param UserGroup $allowedUserGroup The user group which may access this article
-     */
-    public function setAllowedUserGroup(UserGroup $allowedUserGroup = null) {
-        $this->allowedUserGroup = $allowedUserGroup;
     }
 }

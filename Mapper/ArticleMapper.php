@@ -42,8 +42,6 @@ class ArticleMapper extends AbstractMapper {
         $articleDto->setContent($article->getContent());
         $articleDto->setLastEditDate($article->getLastEditDate());
         $articleDto->setCreationDate($article->getCreationDate());
-        $articleDto->setIsPublished($article->getIsPublished());
-        $articleDto->setAllowedUserGroup($this->userGroupMapper->entityToDto($article->getAllowedUserGroup()));
 
         return $articleDto;
     }
@@ -67,9 +65,6 @@ class ArticleMapper extends AbstractMapper {
         $article->setContent($articleDto->getContent());
         $article->setLastEditDate($articleDto->getLastEditDate());
         $article->setCreationDate($articleDto->getCreationDate());
-        $article->setIsPublished($articleDto->isPublished());
-        $article->setAllowedUserGroup($this->userGroupMapper->dtoToEntity($articleDto->getAllowedUserGroup()));
-
 
         return $article;
     }
