@@ -2,14 +2,16 @@
 
 namespace rmatil\CmsBundle\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use JMS\Serializer\Annotation\MaxDepth;
-use JMS\Serializer\Annotation\Type;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\HttpFoundation\File\File;
 
 /**
  * @ORM\Entity
  * @ORM\Table(name="events")
+ *
+ * @Vich\Uploadable
  **/
 class Event {
 
@@ -20,8 +22,6 @@ class Event {
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue
      *
-     * @Type("integer")
-     *
      * @var integer
      */
     protected $id;
@@ -30,9 +30,6 @@ class Event {
      * The author of this article
      *
      * @ORM\ManyToOne(targetEntity="User")
-     *
-     * @Type("rmatil\CmsBundle\Entity\User")
-     * @MaxDepth(1)
      *
      * @var \rmatil\CmsBundle\Entity\User
      */
@@ -43,43 +40,58 @@ class Event {
      *
      * @ORM\ManyToOne(targetEntity="Location")
      *
-     * @Type("rmatil\CmsBundle\Entity\Location")
-     * @MaxDepth(2)
-     *
      * @var \rmatil\CmsBundle\Entity\Location
      */
     protected $location;
 
     /**
-     * A file attached to this event
+     * NOTE: This is not a mapped field of entity metadata, just a simple property.
+     * Use this field in the form.
      *
-     * @ORM\ManyToOne(targetEntity="File")
+     * @Vich\UploadableField(mapping="event_image", fileNameProperty="file")
      *
-     * @Type("rmatil\CmsBundle\Entity\File")
-     * @MaxDepth(2)
-     *
-     * @var \rmatil\CmsBundle\Entity\File
+     * @var File
      */
-    protected $file;
+    private $filePath;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     *
+     * @var string
+     */
+    private $file;
 
     /**
      * The name of the event
      *
      * @ORM\Column(type="string")
      *
-     * @Type("string")
-     *
      * @var string
      */
     protected $name;
 
     /**
+     * The content of the event
+     *
+     * @ORM\Column(type="text", nullable=true)
+     *
+     * @var string
+     */
+    protected $content;
+
+    /**
+     * Some additional info of the event
+     *
+     * @ORM\Column(type="text", nullable=true)
+     *
+     * @var string
+     */
+    protected $additionalInfo;
+
+    /**
      * Repeat options for event
      *
      * @ORM\ManyToOne(targetEntity="RepeatOption")
-     *
-     * @Type("rmatil\CmsBundle\Entity\RepeatOption")
-     * @MaxDepth(1)
      *
      * @var \rmatil\CmsBundle\Entity\RepeatOption
      */
@@ -90,8 +102,6 @@ class Event {
      *
      * @ORM\Column(type="datetime", nullable=true)
      *
-     * @Type("DateTime<'Y-m-d\TH:i:sP', 'UTC'>")
-     *
      * @var \DateTime
      */
     protected $startDate;
@@ -101,42 +111,14 @@ class Event {
      *
      * @ORM\Column(type="datetime", nullable=true)
      *
-     * @Type("DateTime<'Y-m-d\TH:i:sP', 'UTC'>")
-     *
      * @var \DateTime
      */
     protected $endDate;
 
     /**
-     * The description of the event
-     *
-     * @ORM\Column(type="text", nullable=true)
-     *
-     * @Type("string")
-     *
-     * @var string
-     */
-    protected $description;
-
-    /**
-     * Indicates whether this article is locked
-     * for editing or not
-     *
-     * @ORM\ManyToOne(targetEntity="User", cascade="persist")
-     *
-     * @Type("rmatil\CmsBundle\Entity\User")
-     * @MaxDepth(1)
-     *
-     * @var \rmatil\CmsBundle\Entity\User
-     */
-    protected $isLockedBy;
-
-    /**
      * DateTime object of the last edit date
      *
      * @ORM\Column(type="datetime")
-     *
-     * @Type("DateTime<'Y-m-d\TH:i:sP', 'UTC'>")
      *
      * @var \DateTime
      */
@@ -147,8 +129,6 @@ class Event {
      *
      * @ORM\Column(type="datetime")
      *
-     * @Type("DateTime<'Y-m-d\TH:i:sP', 'UTC'>")
-     *
      * @var \DateTime
      */
     protected $creationDate;
@@ -158,9 +138,6 @@ class Event {
      *
      * @ORM\ManyToOne(targetEntity="UserGroup")
      *
-     * @Type("rmatil\CmsBundle\Entity\UserGroup")
-     * @MaxDepth(1)
-     *
      * @var \rmatil\CmsBundle\Entity\UserGroup
      */
     protected $allowedUserGroup;
@@ -169,8 +146,6 @@ class Event {
      * Url name for the event
      *
      * @ORM\Column(type="string")
-     *
-     * @Type("string")
      *
      * @var string
      */
@@ -214,20 +189,42 @@ class Event {
     }
 
     /**
-     * Gets a file attached to this event.
+     * If manually uploading a file (i.e. not using Symfony Form) ensure an instance
+     * of 'UploadedFile' is injected into this setter to trigger the  update. If this
+     * bundle's configuration parameter 'inject_on_load' is set to 'true' this setter
+     * must be able to accept an instance of 'File' as the bundle will inject one here
+     * during Doctrine hydration.
      *
-     * @return \rmatil\CmsBundle\Entity\File
+     * @param File|UploadedFile $image
+     */
+    public function setFilePath(File $image = null) {
+        $this->filePath = $image;
+
+        if ($image) {
+            // It is required that at least one field changes if you are using doctrine
+            // otherwise the event listeners won't be called and the file is lost
+            $this->lastEditDate = new \DateTime();
+        }
+    }
+
+    /**
+     * @return File
+     */
+    public function getFilePath() {
+        return $this->filePath;
+    }
+
+    /**
+     * @return string
      */
     public function getFile() {
         return $this->file;
     }
 
     /**
-     * Sets a file attached to this event.
-     *
-     * @param \rmatil\CmsBundle\Entity\File $file the file to attach
+     * @param string $file
      */
-    public function setFile(File $file = null) {
+    public function setFile($file) {
         $this->file = $file;
     }
 
@@ -308,35 +305,31 @@ class Event {
      *
      * @return string
      */
-    public function getDescription() {
-        return $this->description;
+    public function getContent() {
+        return $this->content;
     }
 
     /**
      * Sets the The description of the event.
      *
-     * @param string $description the description
+     * @param string $content the description
      */
-    public function setDescription($description) {
-        $this->description = $description;
+    public function setContent($content) {
+        $this->content = $content;
     }
 
     /**
-     * Gets the user which locks this user
-     *
-     * @return \rmatil\CmsBundle\Entity\User
+     * @return string
      */
-    public function getIsLockedBy() {
-        return $this->isLockedBy;
+    public function getAdditionalInfo(): string {
+        return $this->additionalInfo;
     }
 
     /**
-     * Sets the user which locks this article
-     *
-     * @param \rmatil\CmsBundle\Entity\User $isLockedBy the user which locks the article
+     * @param string $additionalInfo
      */
-    public function setIsLockedBy($isLockedBy) {
-        $this->isLockedBy = $isLockedBy;
+    public function setAdditionalInfo(string $additionalInfo) {
+        $this->additionalInfo = $additionalInfo;
     }
 
     /**

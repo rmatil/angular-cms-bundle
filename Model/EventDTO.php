@@ -4,7 +4,6 @@
 namespace rmatil\CmsBundle\Model;
 
 
-use Doctrine\Common\Collections\ArrayCollection;
 use JMS\Serializer\Annotation\MaxDepth;
 use JMS\Serializer\Annotation\Type;
 
@@ -79,24 +78,13 @@ class EventDTO {
     protected $endDate;
 
     /**
-     * The description of the event
+     * The content of the event
      *
      * @Type("string")
      *
      * @var string
      */
-    protected $description;
-
-    /**
-     * Indicates whether this article is locked
-     * for editing or not
-     *
-     * @Type("rmatil\CmsBundle\Model\UserDTO")
-     * @MaxDepth(1)
-     *
-     * @var \rmatil\CmsBundle\Model\UserDTO
-     */
-    protected $isLockedBy;
+    protected $content;
 
     /**
      * DateTime object of the last edit date
@@ -121,21 +109,14 @@ class EventDTO {
     protected $creationDate;
 
     /**
-     * All user groups which are allowed to access this event.
+     * The user group which is allowed to access this event.
      *
-     * THIS IS THE INVERSE SIDE. CORRESPONDING RELATION IN USERGROUP MUST BE UPDATED MANUALLY
-     * @see \rmatil\CmsBundle\Entity\UserGroup::$accessiblePages
-     * @link http://docs.doctrine-project.org/en/latest/reference/working-with-associations.html#working-with-associations
+     * @Type("rmatil\CmsBundle\Model\UserGroupDTO")
+     * @MaxDepth(1)
      *
-     * @ORM\ManyToMany(targetEntity="UserGroup", mappedBy="accessibleEvents")
-     * @ORM\JoinTable(name="usergroup_events")
-     *
-     * @Type("ArrayCollection<rmatil\CmsBundle\Model\UserGroupDTO>")
-     * @MaxDepth(2)
-     *
-     * @var ArrayCollection[rmatil\CmsBundle\Model\UserGroupDTO]
+     * @var UserGroupDTO
      */
-    protected $allowedUserGroups;
+    protected $allowedUserGroup;
 
     /**
      * Url name for the event
@@ -249,29 +230,15 @@ class EventDTO {
     /**
      * @return string
      */
-    public function getDescription() {
-        return $this->description;
+    public function getContent() {
+        return $this->content;
     }
 
     /**
-     * @param string $description
+     * @param string $content
      */
-    public function setDescription($description) {
-        $this->description = $description;
-    }
-
-    /**
-     * @return \rmatil\CmsBundle\Model\UserDTO
-     */
-    public function getIsLockedBy() {
-        return $this->isLockedBy;
-    }
-
-    /**
-     * @param \rmatil\CmsBundle\Model\UserDTO $isLockedBy
-     */
-    public function setIsLockedBy($isLockedBy) {
-        $this->isLockedBy = $isLockedBy;
+    public function setContent($content) {
+        $this->content = $content;
     }
 
     /**
@@ -303,17 +270,17 @@ class EventDTO {
     }
 
     /**
-     * @return \Doctrine\Common\Collections\ArrayCollection
+     * @return UserGroupDTO
      */
-    public function getAllowedUserGroups() {
-        return $this->allowedUserGroups;
+    public function getAllowedUserGroup() {
+        return $this->allowedUserGroup;
     }
 
     /**
-     * @param \Doctrine\Common\Collections\ArrayCollection $allowedUserGroups
+     * @param UserGroupDTO $allowedUserGroup
      */
-    public function setAllowedUserGroups($allowedUserGroups) {
-        $this->allowedUserGroups = $allowedUserGroups;
+    public function setAllowedUserGroup(UserGroupDTO $allowedUserGroup = null) {
+        $this->allowedUserGroup = $allowedUserGroup;
     }
 
     /**

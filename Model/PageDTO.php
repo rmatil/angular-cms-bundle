@@ -106,7 +106,7 @@ class PageDTO {
     protected $creationDate;
 
     /**
-     * The user groups which is allowed to access this page.
+     * The user group which is allowed to access this page.
      *
      * @Type("rmatil\CmsBundle\Model\UserGroupDTO")
      * @MaxDepth(1)
