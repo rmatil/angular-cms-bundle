@@ -20,7 +20,7 @@ class EventController extends Controller {
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function getEventsAction() {
-        return $this->render('AppBundle::upload.html.twig');
+        return $this->render('rmatilCmsBundle:Events:upload.html.twig');
     }
 
     /**
@@ -30,7 +30,7 @@ class EventController extends Controller {
     public function getEventsByIdAction($id) {
         $event = $this->get('doctrine.orm.default_entity_manager')->getRepository(EntityNames::EVENT)->findOneBy(['id' => $id]);
 
-        return $this->render('AppBundle::upload.html.twig', ['event' => $event]);
+        return $this->render('rmatilCmsBundle:Events:upload.html.twig', ['event' => $event]);
     }
 
 
