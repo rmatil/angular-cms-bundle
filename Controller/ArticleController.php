@@ -23,7 +23,7 @@ class ArticleController extends Controller {
     /**
      * @return JsonResponse
      *
-     * @Route("/articles", name="get_articles", methods={"GET"})
+     * @Route("/articles", name="rmatil_cms_get_articles", methods={"GET"})
      */
     public function getArticlesAction() {
         $responseFactory = $this->get('rmatil_cms.factory.json_response');
@@ -37,7 +37,7 @@ class ArticleController extends Controller {
      *
      * @return JsonResponse
      *
-     * @Route("/articles/{id}", name="get_article", methods={"GET"})
+     * @Route("/articles/{id}", name="rmatil_cms_get_article", methods={"GET"})
      */
     public function getArticleByIdAction($id) {
         $responseFactory = $this->get('rmatil_cms.factory.json_response');
@@ -57,7 +57,7 @@ class ArticleController extends Controller {
      *
      * @return JsonResponse
      *
-     * @Route("/articles/{id}", name="update_article", methods={"PUT"})
+     * @Route("/articles/{id}", name="rmatil_cms_update_article", methods={"PUT"})
      */
     public function updateArticleAction($id, Request $request) {
         $responseFactory = $this->get('rmatil_cms.factory.json_response');
@@ -90,7 +90,7 @@ class ArticleController extends Controller {
      *
      * @return JsonResponse
      *
-     * @Route("/articles", name="insert_article", methods={"POST"})
+     * @Route("/articles", name="rmatil_cms_insert_article", methods={"POST"})
      */
     public function insertArticleAction(Request $request) {
         $responseFactory = $this->get('rmatil_cms.factory.json_response');
@@ -122,7 +122,7 @@ class ArticleController extends Controller {
      *
      * @return JsonResponse
      *
-     * @Route("/articles/{id}", name="delete_article", methods={"DELETE"})
+     * @Route("/articles/{id}", name="rmatil_cms_delete_article", methods={"DELETE"})
      */
     public function deleteArticleByIdAction($id) {
         $responseFactory = $this->get('rmatil_cms.factory.json_response');
@@ -136,19 +136,5 @@ class ArticleController extends Controller {
         }
 
         return $responseFactory->createResponseWithCode(HttpStatusCodes::NO_CONTENT, "");
-    }
-
-    public function getEmptyArticleAction() {
-        $article = new Article();
-
-        $author = $this->get('security.token_storage')->getToken()->getUsername();
-        $article->setAuthor($author);
-
-        $now = new DateTime('now', new DateTimeZone('UTC'));
-        $article->setCreationDate($now);
-        $article->setLastEditDate($now);
-
-        $responseFactory = $this->get('rmatil_cms.factory.json_response');
-        $responseFactory->createResponse($article);
     }
 }

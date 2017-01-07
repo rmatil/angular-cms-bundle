@@ -20,7 +20,7 @@ class EventController extends Controller {
     /**
      * @return JsonResponse
      *
-     * @Route("/events", name="get_events", methods={"GET"})
+     * @Route("/events", name="rmatil_cms_get_events", methods={"GET"})
      */
     public function getEventsAction() {
         $responseFactory = $this->get('rmatil_cms.factory.json_response');
@@ -34,7 +34,7 @@ class EventController extends Controller {
      *
      * @return JsonResponse
      *
-     * @Route("/events/{id}", name="get_event", methods={"GET"})
+     * @Route("/events/{id}", name="rmatil_cms_get_event", methods={"GET"})
      */
     public function getEventByIdAction($id) {
         $responseFactory = $this->get('rmatil_cms.factory.json_response');
@@ -54,7 +54,7 @@ class EventController extends Controller {
      *
      * @return JsonResponse
      *
-     * @Route("/events/{id}", name="update_event", methods={"PUT"})
+     * @Route("/events/{id}", name="rmatil_cms_update_event", methods={"PUT"})
      */
     public function updateArticleAction($id, Request $request) {
         $responseFactory = $this->get('rmatil_cms.factory.json_response');
@@ -87,7 +87,7 @@ class EventController extends Controller {
      *
      * @return JsonResponse
      *
-     * @Route("/events", name="insert_events", methods={"POST"})
+     * @Route("/events", name="rmatil_cms_insert_events", methods={"POST"})
      */
     public function insertEventAction(Request $request) {
         $responseFactory = $this->get('rmatil_cms.factory.json_response');
@@ -115,7 +115,7 @@ class EventController extends Controller {
      *
      * @return JsonResponse
      *
-     * @Route("/events/{id}", name="delete_event", methods={"DELETE"})
+     * @Route("/events/{id}", name="rmatil_cms_delete_event", methods={"DELETE"})
      */
     public function deleteEventByIdAction($id) {
         $responseFactory = $this->get('rmatil_cms.factory.json_response');

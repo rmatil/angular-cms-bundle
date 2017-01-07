@@ -23,7 +23,7 @@ class PageController extends Controller {
     /**
      * @return JsonResponse
      *
-     * @Route("/pages", name="get_pages", methods={"GET"})
+     * @Route("/pages", name="rmatil_cms_get_pages", methods={"GET"})
      */
     public function getPagesAction() {
         $responseFactory = $this->get('rmatil_cms.factory.json_response');
@@ -37,7 +37,7 @@ class PageController extends Controller {
      *
      * @return JsonResponse
      *
-     * @Route("/pages/{id}", name="get_page", methods={"GET"})
+     * @Route("/pages/{id}", name="rmatil_cms_get_page", methods={"GET"})
      */
     public function getPageByIdAction($id) {
         $responseFactory = $this->get('rmatil_cms.factory.json_response');
@@ -57,7 +57,7 @@ class PageController extends Controller {
      *
      * @return JsonResponse
      *
-     * @Route("/pages/{id}", name="update_page", methods={"PUT"})
+     * @Route("/pages/{id}", name="rmatil_cms_update_page", methods={"PUT"})
      */
     public function updatePageAction($id, Request $request) {
         $responseFactory = $this->get('rmatil_cms.factory.json_response');
@@ -90,7 +90,7 @@ class PageController extends Controller {
      *
      * @return JsonResponse
      *
-     * @Route("/pages", name="insert_page", methods={"POST"})
+     * @Route("/pages", name="rmatil_cms_insert_page", methods={"POST"})
      */
     public function insertPageAction(Request $request) {
         $responseFactory = $this->get('rmatil_cms.factory.json_response');
@@ -122,7 +122,7 @@ class PageController extends Controller {
      *
      * @return JsonResponse
      *
-     * @Route("/pages/{id}", name="delete_page", methods={"DELETE"})
+     * @Route("/pages/{id}", name="rmatil_cms_delete_page", methods={"DELETE"})
      */
     public function deletePageByIdAction($id) {
         $responseFactory = $this->get('rmatil_cms.factory.json_response');

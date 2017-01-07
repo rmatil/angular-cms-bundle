@@ -20,7 +20,7 @@ class ArticleCategoryController extends Controller {
     /**
      * @return JsonResponse
      *
-     * @Route("/article-categories", name="get_article_categories", methods={"GET"})
+     * @Route("/article-categories", name="rmatil_cms_get_article_categories", methods={"GET"})
      */
     public function getArticleCategoriesAction() {
         $responseFactory = $this->get('rmatil_cms.factory.json_response');
@@ -34,7 +34,7 @@ class ArticleCategoryController extends Controller {
      *
      * @return JsonResponse
      *
-     * @Route("/article-categories/{id}", name="get_article_category", methods={"GET"})
+     * @Route("/article-categories/{id}", name="rmatil_cms_get_article_category", methods={"GET"})
      */
     public function getArticleCategoryByIdAction($id) {
         $responseFactory = $this->get('rmatil_cms.factory.json_response');
@@ -54,7 +54,7 @@ class ArticleCategoryController extends Controller {
      *
      * @return JsonResponse
      * 
-     * @Route("/article-categories/{id}", name="update_article_category", methods={"PUT"})
+     * @Route("/article-categories/{id}", name="rmatil_cms_update_article_category", methods={"PUT"})
      */
     public function updateArticleCategoryAction($id, Request $request) {
         $responseFactory = $this->get('rmatil_cms.factory.json_response');
@@ -88,7 +88,7 @@ class ArticleCategoryController extends Controller {
      *
      * @return JsonResponse
      *
-     * @Route("/article-categories", name="insert_article_category", methods={"POST"})
+     * @Route("/article-categories", name="rmatil_cms_insert_article_category", methods={"POST"})
      */
     public function insertArticleCategoryAction(Request $request) {
         $responseFactory = $this->get('rmatil_cms.factory.json_response');
@@ -116,7 +116,7 @@ class ArticleCategoryController extends Controller {
      *
      * @return JsonResponse
      *
-     * @Route("/article-categories/{id}", name="delete_article_category", methods={"DELETE"})
+     * @Route("/article-categories/{id}", name="rmatil_cms_delete_article_category", methods={"DELETE"})
      */
     public function deleteArticleCategoryByIdAction($id) {
         $responseFactory = $this->get('rmatil_cms.factory.json_response');
