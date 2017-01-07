@@ -41,7 +41,7 @@ class LanguageDTO {
      *
      * @return integer
      */
-    public function getId() {
+    public function getId(): ?int {
         return $this->id;
     }
 
@@ -50,16 +50,16 @@ class LanguageDTO {
      *
      * @param integer $id the id
      */
-    public function setId($id) {
+    public function setId(int $id = null) {
         $this->id = $id;
     }
 
     /**
      * Gets the value of name.
      *
-     * @return mixed
+     * @return string
      */
-    public function getName() {
+    public function getName(): ?string {
         return $this->name;
     }
 
@@ -68,7 +68,7 @@ class LanguageDTO {
      *
      * @param mixed $name the name
      */
-    public function setName($name) {
+    public function setName(string $name = null) {
         $this->name = $name;
     }
 
@@ -77,7 +77,7 @@ class LanguageDTO {
      *
      * @return string
      */
-    public function getCode() {
+    public function getCode(): ?string {
         return $this->code;
     }
 
@@ -86,7 +86,7 @@ class LanguageDTO {
      *
      * @param string $code the code
      */
-    public function setCode($code) {
+    public function setCode(string $code = null) {
         $this->code = $code;
     }
 }

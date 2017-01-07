@@ -32,7 +32,7 @@ class ArticleCategoryDTO {
      *
      * @return integer
      */
-    public function getId() {
+    public function getId(): ?int {
         return $this->id;
     }
 
@@ -41,7 +41,7 @@ class ArticleCategoryDTO {
      *
      * @param integer $id the id
      */
-    public function setId($id) {
+    public function setId(int $id = null) {
         $this->id = $id;
     }
 
@@ -50,7 +50,7 @@ class ArticleCategoryDTO {
      *
      * @return string
      */
-    public function getName() {
+    public function getName(): ?string {
         return $this->name;
     }
 
@@ -59,7 +59,7 @@ class ArticleCategoryDTO {
      *
      * @param string $name the name
      */
-    public function setName($name) {
+    public function setName(string $name = null) {
         $this->name = $name;
     }
 

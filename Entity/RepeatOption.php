@@ -2,7 +2,6 @@
 
 namespace rmatil\CmsBundle\Entity;
 
-use JMS\Serializer\Annotation\Type;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -24,8 +23,6 @@ class RepeatOption {
      * @ORM\Column(type="integer") 
      * @ORM\GeneratedValue
      *
-     * @Type("integer")
-     * 
      * @var integer
      */
     protected $id;
@@ -35,8 +32,6 @@ class RepeatOption {
      *
      * @ORM\Column(type="string")
      *
-     * @Type("string")
-     * 
      * @var string
      */
     protected $optionValue;

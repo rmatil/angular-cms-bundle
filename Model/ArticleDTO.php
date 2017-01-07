@@ -26,7 +26,7 @@ class ArticleDTO {
      *
      * @var string
      */
-    protected $urlName = '';
+    protected $urlName;
 
     /**
      * The category to which the article belongs
@@ -65,7 +65,7 @@ class ArticleDTO {
      *
      * @var string
      */
-    protected $title = '';
+    protected $title;
 
     /**
      * Body of the article
@@ -74,7 +74,7 @@ class ArticleDTO {
      *
      * @var string
      */
-    protected $content = '';
+    protected $content;
 
     /**
      * DateTime object of the last edit date
@@ -96,43 +96,38 @@ class ArticleDTO {
      */
     protected $creationDate;
 
-    public function __construct() {
-        $this->creationDate = new DateTime();
-        $this->lastEditDate = new DateTime();
-    }
-
     /**
      * @return int
      */
-    public function getId() {
+    public function getId(): ?int {
         return $this->id;
     }
 
     /**
      * @param int $id
      */
-    public function setId(int $id) {
+    public function setId(int $id = null) {
         $this->id = $id;
     }
 
     /**
      * @return string
      */
-    public function getUrlName(): string {
+    public function getUrlName(): ?string {
         return $this->urlName;
     }
 
     /**
      * @param string $urlName
      */
-    public function setUrlName(string $urlName) {
+    public function setUrlName(string $urlName = null) {
         $this->urlName = $urlName;
     }
 
     /**
      * @return ArticleCategoryDTO
      */
-    public function getCategory() {
+    public function getCategory(): ?ArticleCategoryDTO {
         return $this->category;
     }
 
@@ -146,7 +141,7 @@ class ArticleDTO {
     /**
      * @return UserDTO
      */
-    public function getAuthor() {
+    public function getAuthor(): ?UserDTO {
         return $this->author;
     }
 
@@ -160,7 +155,7 @@ class ArticleDTO {
     /**
      * @return LanguageDTO
      */
-    public function getLanguage() {
+    public function getLanguage(): ?LanguageDTO {
         return $this->language;
     }
 
@@ -174,35 +169,35 @@ class ArticleDTO {
     /**
      * @return string
      */
-    public function getTitle(): string {
+    public function getTitle(): ?string {
         return $this->title;
     }
 
     /**
      * @param string $title
      */
-    public function setTitle(string $title) {
+    public function setTitle(string $title = null) {
         $this->title = $title;
     }
 
     /**
      * @return string
      */
-    public function getContent(): string {
+    public function getContent(): ?string {
         return $this->content;
     }
 
     /**
      * @param string $content
      */
-    public function setContent(string $content) {
+    public function setContent(string $content = null) {
         $this->content = $content;
     }
 
     /**
      * @return DateTime
      */
-    public function getLastEditDate() {
+    public function getLastEditDate(): ?DateTime {
         return $this->lastEditDate;
     }
 
@@ -216,7 +211,7 @@ class ArticleDTO {
     /**
      * @return DateTime
      */
-    public function getCreationDate() {
+    public function getCreationDate(): ?DateTime {
         return $this->creationDate;
     }
 

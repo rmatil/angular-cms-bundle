@@ -2,148 +2,77 @@
 
 namespace rmatil\CmsBundle\Entity;
 
-use JMS\Serializer\Annotation\MaxDepth;
-use JMS\Serializer\Annotation\Type;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity 
+ * @ORM\Entity
  * @ORM\Table(name="locations")
  **/
 class Location {
 
     /**
      * Id of the location
-     * 
-     * @ORM\Id 
-     * @ORM\Column(type="integer") 
+     *
+     * @ORM\Id
+     * @ORM\Column(type="integer")
      * @ORM\GeneratedValue
      *
-     * @Type("integer")
-     * 
      * @var integer
      */
     protected $id;
 
     /**
-     * Author of this location 
-     * 
-     * @ORM\ManyToOne(targetEntity="User")
-     *
-     * @Type("rmatil\CmsBundle\Entity\User")
-     * @MaxDepth(1)
-     *
-     * @var \rmatil\CmsBundle\Entity\User
-     */
-    protected $author;
-
-    /**
      * name of the location
-     * 
+     *
      * @ORM\Column(type="string")
      *
-     * @Type("string")
-     * 
      * @var string
      */
     protected $name;
 
     /**
      * address of the location
-     * 
+     *
      * @ORM\Column(type="string")
      *
-     * @Type("string")
-     * 
      * @var string
      */
     protected $address;
 
     /**
-     * description of the location
-     * 
-     * @ORM\Column(type="string", nullable=true)
-     *
-     * @Type("string")
-     * 
-     * @var string
-     */
-    protected $description;
-    
-    /**
-     * Indicates whether this article is locked 
-     * for editing or not
-     * 
-     * @ORM\ManyToOne(targetEntity="User", cascade="persist")
-     *
-     * @Type("rmatil\CmsBundle\Entity\User")
-     * @MaxDepth(1)
-     * 
-     * @var \rmatil\CmsBundle\Entity\User
-     */
-    protected $isLockedBy;
-
-    /**
      * longitude of the location
-     * 
+     *
      * @ORM\Column(type="float")
      *
-     * @Type("double")
-     * 
      * @var float
      */
     protected $longitude;
 
     /**
      * latitude of the location
-     * 
+     *
      * @ORM\Column(type="float")
      *
-     * @Type("double")
-     * 
      * @var float
      */
     protected $latitude;
 
     /**
-     * DateTime object of the last editing date
-     * 
-     * @ORM\Column(type="datetime")
+     * Gets the Id of the location.
      *
-     * @Type("DateTime<'Y-m-d\TH:i:sP', 'UTC'>")
-     * 
-     * @var \DateTime
+     * @return integer
      */
-    protected $lastEditDate;
-
-    /**
-     * DateTime object of the creation date
-     * 
-     * @ORM\Column(type="datetime")
-     *
-     * @Type("DateTime<'Y-m-d\TH:i:sP', 'UTC'>")
-     * 
-     * @var \DateTime
-     */
-    protected $creationDate;
-
-
-    /**
-     * Gets the Author of this location.
-     *
-     * @return \rmatil\CmsBundle\Entity\User
-     */
-    public function getAuthor() {
-        return $this->author;
+    public function getId() {
+        return $this->id;
     }
 
     /**
-     * Sets the Author of this location.
+     * Sets the Id of the location.
      *
-     * @param \rmatil\CmsBundle\Entity\User $author the author
+     * @param integer $id the id
      */
-    public function setAuthor(User $author = null) {
-        $this->author = $author;
+    public function setId($id) {
+        $this->id = $id;
     }
 
     /**
@@ -183,42 +112,6 @@ class Location {
     }
 
     /**
-     * Gets the description of the location.
-     *
-     * @return string
-     */
-    public function getDescription() {
-        return $this->description;
-    }
-
-    /**
-     * Sets the description of the location.
-     *
-     * @param string $description the description
-     */
-    public function setDescription($description) {
-        $this->description = $description;
-    }
-
-    /**
-     * Gets the user which locks this user
-     *
-     * @return \rmatil\CmsBundle\Entity\User
-     */
-    public function getIsLockedBy() {
-        return $this->isLockedBy;
-    }
-
-    /**
-     * Sets the user which locks this article
-     *
-     * @param \rmatil\CmsBundle\Entity\User $isLockedBy the user which locks the article
-     */
-    public function setIsLockedBy($isLockedBy) {
-        $this->isLockedBy = $isLockedBy;
-    }
-
-    /**
      * Gets the longitude of the location.
      *
      * @return float
@@ -252,70 +145,5 @@ class Location {
      */
     public function setLatitude($latitude) {
         $this->latitude = $latitude;
-    }
-
-    /**
-     * Gets the DateTime object of the last editing date.
-     *
-     * @return \DateTime
-     */
-    public function getLastEditDate() {
-        return $this->lastEditDate;
-    }
-
-    /**
-     * Sets the DateTime object of the last editing date.
-     *
-     * @param \DateTime $lastEditDate the last edit date
-     */
-    public function setLastEditDate(\DateTime $lastEditDate) {
-        $this->lastEditDate = $lastEditDate;
-    }
-
-    /**
-     * Gets the DateTime object of the creation date.
-     *
-     * @return \DateTime
-     */
-    public function getCreationDate() {
-        return $this->creationDate;
-    }
-
-    /**
-     * Sets the DateTime object of the creation date.
-     *
-     * @param \DateTime $creationDate the creation date
-     */
-    public function setCreationDate(\DateTime $creationDate) {
-        $this->creationDate = $creationDate;
-    }
-
-    public function update(Location $location) {
-        $this->setAddress($location->getAddress());
-        $this->setDescription($location->getDescription());
-        $this->setLatitude($location->getLatitude());
-        $this->setLongitude($location->getLongitude());
-        $this->setName($location->getName());
-        $this->setLastEditDate($location->getLastEditDate());
-        $this->setCreationDate($location->getCreationDate());
-        $this->setAuthor($location->getAuthor());
-    }
-
-    /**
-     * Gets the Id of the location.
-     *
-     * @return integer
-     */
-    public function getId() {
-        return $this->id;
-    }
-
-    /**
-     * Sets the Id of the location.
-     *
-     * @param integer $id the id
-     */
-    public function setId($id) {
-        $this->id = $id;
     }
 }

@@ -4,6 +4,7 @@
 namespace rmatil\CmsBundle\Model;
 
 
+use DateTime;
 use JMS\Serializer\Annotation as Serializer;
 use JMS\Serializer\Annotation\Type;
 
@@ -139,196 +140,196 @@ class UserDTO {
     /**
      * @return int
      */
-    public function getId() {
+    public function getId(): ?int {
         return $this->id;
     }
 
     /**
      * @param int $id
      */
-    public function setId($id) {
+    public function setId(int $id = null) {
         $this->id = $id;
     }
 
     /**
      * @return string
      */
-    public function getFirstName() {
+    public function getFirstName(): ?string {
         return $this->firstName;
     }
 
     /**
      * @param string $firstName
      */
-    public function setFirstName($firstName) {
+    public function setFirstName(string $firstName = null) {
         $this->firstName = $firstName;
     }
 
     /**
      * @return string
      */
-    public function getLastName() {
+    public function getLastName(): ?string {
         return $this->lastName;
     }
 
     /**
      * @param string $lastName
      */
-    public function setLastName($lastName) {
+    public function setLastName(string $lastName = null) {
         $this->lastName = $lastName;
     }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getPhoneNumber() {
+    public function getPhoneNumber(): ?string {
         return $this->phoneNumber;
     }
 
     /**
-     * @param mixed $phoneNumber
+     * @param string $phoneNumber
      */
-    public function setPhoneNumber($phoneNumber) {
+    public function setPhoneNumber(string $phoneNumber = null) {
         $this->phoneNumber = $phoneNumber;
     }
 
     /**
      * @return mixed
      */
-    public function getMobileNumber() {
+    public function getMobileNumber(): ?string {
         return $this->mobileNumber;
     }
 
     /**
-     * @param mixed $mobileNumber
+     * @param string $mobileNumber
      */
-    public function setMobileNumber($mobileNumber) {
+    public function setMobileNumber(string $mobileNumber = null) {
         $this->mobileNumber = $mobileNumber;
     }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getAddress() {
+    public function getAddress(): ?string {
         return $this->address;
     }
 
     /**
-     * @param mixed $address
+     * @param string $address
      */
-    public function setAddress($address) {
+    public function setAddress(string $address = null) {
         $this->address = $address;
     }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getZipCode() {
+    public function getZipCode(): ?string {
         return $this->zipCode;
     }
 
     /**
-     * @param mixed $zipCode
+     * @param string $zipCode
      */
-    public function setZipCode($zipCode) {
+    public function setZipCode(string $zipCode = null) {
         $this->zipCode = $zipCode;
     }
 
     /**
      * @return string
      */
-    public function getPlace() {
+    public function getPlace(): ?string {
         return $this->place;
     }
 
     /**
      * @param string $place
      */
-    public function setPlace($place) {
+    public function setPlace(string $place = null) {
         $this->place = $place;
     }
 
     /**
      * @return string
      */
-    public function getEmail() {
+    public function getEmail(): ?string {
         return $this->email;
     }
 
     /**
      * @param string $email
      */
-    public function setEmail($email) {
+    public function setEmail(string $email = null) {
         $this->email = $email;
     }
 
     /**
      * @return boolean
      */
-    public function isLocked() {
+    public function isLocked(): ?bool {
         return $this->isLocked;
     }
 
     /**
      * @param boolean $isLocked
      */
-    public function setIsLocked($isLocked) {
+    public function setIsLocked(bool $isLocked = null) {
         $this->isLocked = $isLocked;
     }
 
     /**
      * @return boolean
      */
-    public function isExpired() {
+    public function isExpired(): ?bool {
         return $this->isExpired;
     }
 
     /**
      * @param boolean $isExpired
      */
-    public function setIsExpired($isExpired) {
+    public function setIsExpired(bool $isExpired = null) {
         $this->isExpired = $isExpired;
     }
 
     /**
      * @return boolean
      */
-    public function isEnabled() {
+    public function isEnabled(): ?bool {
         return $this->isEnabled;
     }
 
     /**
      * @param boolean $isEnabled
      */
-    public function setIsEnabled($isEnabled) {
+    public function setIsEnabled(bool $isEnabled = null) {
         $this->isEnabled = $isEnabled;
     }
 
     /**
      * @return \DateTime
      */
-    public function getLastLoginDate() {
+    public function getLastLoginDate(): ?DateTime {
         return $this->lastLoginDate;
     }
 
     /**
      * @param \DateTime $lastLoginDate
      */
-    public function setLastLoginDate($lastLoginDate) {
+    public function setLastLoginDate(DateTime $lastLoginDate = null) {
         $this->lastLoginDate = $lastLoginDate;
     }
 
     /**
      * @return array
      */
-    public function getRoles() {
+    public function getRoles(): ?array {
         return $this->roles;
     }
 
     /**
      * @param array $roles
      */
-    public function setRoles($roles) {
+    public function setRoles(array $roles = null) {
         $this->roles = $roles;
     }
 }

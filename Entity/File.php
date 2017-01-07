@@ -3,8 +3,7 @@
 namespace rmatil\CmsBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use JMS\Serializer\Annotation\MaxDepth;
-use JMS\Serializer\Annotation\Type;
+use Symfony\Component\HttpFoundation\File\File as HttpFoundationFile;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
@@ -23,8 +22,6 @@ class File {
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue
      *
-     * @Type("integer")
-     *
      * @var integer
      */
     protected $id;
@@ -33,8 +30,6 @@ class File {
      * The name of the File
      *
      * @ORM\Column(type="string")
-     *
-     * @Type("string")
      *
      * @var string
      */
@@ -45,8 +40,6 @@ class File {
      *
      * @ORM\Column(type="string")
      *
-     * @Type("string")
-     *
      * @var string
      */
     protected $description;
@@ -55,26 +48,23 @@ class File {
      * NOTE: This is not a mapped field of entity metadata, just a simple property.
      * Use this field in the form.
      *
-     * @Vich\UploadableField(mapping="event_image", fileNameProperty="file")
+     * @Vich\UploadableField(mapping="event_image", fileNameProperty="filePath")
      *
      * @var File
      */
-    private $filePath;
+    private $file;
 
     /**
      * @ORM\Column(type="string", length=255)
      *
      * @var string
      */
-    private $file;
+    private $filePath;
 
     /**
      * Author of this file
      *
      * @ORM\ManyToOne(targetEntity="User")
-     *
-     * @Type("rmatil\CmsBundle\Entity\User")
-     * @MaxDepth(1)
      *
      * @var \rmatil\CmsBundle\Entity\User
      */
@@ -85,11 +75,22 @@ class File {
      *
      * @ORM\Column(type="datetime")
      *
-     * @Type("DateTime<'Y-m-d\TH:i:sP', 'UTC'>")
-     *
      * @var \DateTime
      */
     protected $creationDate;
+
+    /**
+     * DateTime object of the last edit date.
+     *
+     * Note, this field is only used for allowing to update
+     * this entity through the VichUploaderBundle in order
+     * to trigger a new change whenever the file is set.
+     *
+     * @ORM\Column(type="datetime")
+     *
+     * @var \DateTime
+     */
+    private $lastEditDate;
 
     /**
      * Gets the The id of the File.
@@ -152,10 +153,10 @@ class File {
      * must be able to accept an instance of 'File' as the bundle will inject one here
      * during Doctrine hydration.
      *
-     * @param File|UploadedFile $image
+     * @param \Symfony\Component\HttpFoundation\File\File|UploadedFile $image
      */
-    public function setFilePath(File $image = null) {
-        $this->filePath = $image;
+    public function setFile(HttpFoundationFile $image = null) {
+        $this->file = $image;
 
         if ($image) {
             // It is required that at least one field changes if you are using doctrine
@@ -167,22 +168,22 @@ class File {
     /**
      * @return File
      */
-    public function getFilePath() {
-        return $this->filePath;
-    }
-
-    /**
-     * @return string
-     */
     public function getFile() {
         return $this->file;
     }
 
     /**
-     * @param string $file
+     * @return string
      */
-    public function setFile($file) {
-        $this->file = $file;
+    public function getFilePath() {
+        return $this->filePath;
+    }
+
+    /**
+     * @param string $filePath
+     */
+    public function setFilePath($filePath) {
+        $this->filePath = $filePath;
     }
 
     /**

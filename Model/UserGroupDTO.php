@@ -38,42 +38,42 @@ class UserGroupDTO {
     /**
      * @return int
      */
-    public function getId() {
+    public function getId(): ?int {
         return $this->id;
     }
 
     /**
      * @param int $id
      */
-    public function setId($id) {
+    public function setId(int $id = null) {
         $this->id = $id;
     }
 
     /**
      * @return string
      */
-    public function getName() {
+    public function getName(): ?string {
         return $this->name;
     }
 
     /**
      * @param string $name
      */
-    public function setName($name) {
+    public function setName(string $name = null) {
         $this->name = $name;
     }
 
     /**
      * @return string
      */
-    public function getRole() {
+    public function getRole(): ?string {
         return $this->role;
     }
 
     /**
      * @param string $role
      */
-    public function setRole($role) {
+    public function setRole(string $role = null) {
         $this->role = $role;
     }
 }

@@ -81,7 +81,7 @@ class UserMapperTest extends PHPUnit_Framework_TestCase {
         $user->setZipCode('1234');
         $user->setPlace('some Place');
         $user->setEmail('some@mail.com');
-        $user->setLastName(new DateTime());
+        $user->setLastLogin(new DateTime());
 
         return [
             [$user]

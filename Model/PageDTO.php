@@ -27,7 +27,7 @@ class PageDTO {
      *
      * @var string
      */
-    protected $urlName = '';
+    protected $urlName;
 
     /**
      * The author of this page
@@ -56,7 +56,7 @@ class PageDTO {
      *
      * @var string
      */
-    protected $title = '';
+    protected $title;
 
     /**
      * Parent page of this page
@@ -74,7 +74,7 @@ class PageDTO {
      * @Type("ArrayCollection<rmatil\CmsBundle\Model\ArticleDTO>")
      * @MaxDepth(2)
      *
-     * @var array
+     * @var ArrayCollection
      */
     protected $articles;
 
@@ -85,7 +85,7 @@ class PageDTO {
      *
      * @var boolean
      */
-    protected $isPublished = false;
+    protected $isPublished;
 
     /**
      * DateTime object of the last edit date. May be null
@@ -122,46 +122,40 @@ class PageDTO {
      *
      * @var boolean
      */
-    protected $isStartPage = false;
-
-    public function __construct() {
-        $this->articles = new ArrayCollection();
-        $this->lastEditDate = new DateTime();
-        $this->creationDate = new DateTime();
-    }
+    protected $isStartPage;
 
     /**
      * @return int
      */
-    public function getId() {
+    public function getId(): ?int {
         return $this->id;
     }
 
     /**
      * @param int $id
      */
-    public function setId($id) {
+    public function setId(int $id = null) {
         $this->id = $id;
     }
 
     /**
      * @return string
      */
-    public function getUrlName() {
+    public function getUrlName(): ?string {
         return $this->urlName;
     }
 
     /**
      * @param string $urlName
      */
-    public function setUrlName($urlName) {
+    public function setUrlName(string $urlName = null) {
         $this->urlName = $urlName;
     }
 
     /**
      * @return UserDTO
      */
-    public function getAuthor() {
+    public function getAuthor(): ?UserDTO {
         return $this->author;
     }
 
@@ -175,7 +169,7 @@ class PageDTO {
     /**
      * @return LanguageDTO
      */
-    public function getLanguage() {
+    public function getLanguage(): ?LanguageDTO {
         return $this->language;
     }
 
@@ -189,7 +183,7 @@ class PageDTO {
     /**
      * @return string
      */
-    public function getTitle() {
+    public function getTitle(): ?string {
         return $this->title;
     }
 
@@ -203,7 +197,7 @@ class PageDTO {
     /**
      * @return \rmatil\CmsBundle\Model\PageDTO
      */
-    public function getParent() {
+    public function getParent(): ?PageDTO {
         return $this->parent;
     }
 
@@ -217,7 +211,7 @@ class PageDTO {
     /**
      * @return ArrayCollection
      */
-    public function getArticles() {
+    public function getArticles(): ?ArrayCollection {
         return $this->articles;
     }
 
@@ -231,70 +225,70 @@ class PageDTO {
     /**
      * @return boolean
      */
-    public function isIsPublished(): bool {
+    public function isIsPublished(): ?bool {
         return $this->isPublished;
     }
 
     /**
      * @param boolean $isPublished
      */
-    public function setIsPublished(bool $isPublished) {
+    public function setIsPublished(bool $isPublished = null) {
         $this->isPublished = $isPublished;
     }
 
     /**
      * @return \DateTime
      */
-    public function getLastEditDate() {
+    public function getLastEditDate(): ?DateTime {
         return $this->lastEditDate;
     }
 
     /**
      * @param \DateTime $lastEditDate
      */
-    public function setLastEditDate($lastEditDate) {
+    public function setLastEditDate(DateTime $lastEditDate = null) {
         $this->lastEditDate = $lastEditDate;
     }
 
     /**
      * @return \DateTime
      */
-    public function getCreationDate() {
+    public function getCreationDate(): ?DateTime {
         return $this->creationDate;
     }
 
     /**
      * @param \DateTime $creationDate
      */
-    public function setCreationDate($creationDate) {
+    public function setCreationDate(DateTime $creationDate = null) {
         $this->creationDate = $creationDate;
     }
 
     /**
-     * @return mixed
+     * @return UserGroupDTO
      */
-    public function getAllowedUserGroup() {
+    public function getAllowedUserGroup(): ?UserGroupDTO {
         return $this->allowedUserGroup;
     }
 
     /**
-     * @param mixed $allowedUserGroup
+     * @param UserGroupDTO $allowedUserGroup
      */
-    public function setAllowedUserGroup($allowedUserGroup) {
+    public function setAllowedUserGroup(UserGroupDTO $allowedUserGroup = null) {
         $this->allowedUserGroup = $allowedUserGroup;
     }
 
     /**
      * @return boolean
      */
-    public function isIsStartPage(): bool {
+    public function isIsStartPage(): ?bool {
         return $this->isStartPage;
     }
 
     /**
      * @param boolean $isStartPage
      */
-    public function setIsStartPage(bool $isStartPage) {
+    public function setIsStartPage(bool $isStartPage = null) {
         $this->isStartPage = $isStartPage;
     }
 }
