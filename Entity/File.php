@@ -5,10 +5,14 @@ namespace rmatil\CmsBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation\MaxDepth;
 use JMS\Serializer\Annotation\Type;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\Entity
  * @ORM\Table(name="files")
+ *
+ * @Vich\Uploadable
  **/
 class File {
 
@@ -48,81 +52,21 @@ class File {
     protected $description;
 
     /**
-     * The link to this file
+     * NOTE: This is not a mapped field of entity metadata, just a simple property.
+     * Use this field in the form.
      *
-     * @ORM\Column(type="string")
+     * @Vich\UploadableField(mapping="event_image", fileNameProperty="file")
      *
-     * @Type("string")
+     * @var File
+     */
+    private $filePath;
+
+    /**
+     * @ORM\Column(type="string", length=255)
      *
      * @var string
      */
-    protected $link;
-
-    /**
-     * The local path to this file
-     *
-     * @ORM\Column(type="string")
-     *
-     * @Type("string")
-     *
-     * @var string
-     */
-    protected $localPath;
-
-    /**
-     * The link to a thumbnail of this file
-     *
-     * @ORM\Column(type="string", nullable=true)
-     *
-     * @Type("string")
-     *
-     * @var string
-     */
-    protected $thumbnailLink;
-
-    /**
-     * The local path to the thumbnail of this file
-     *
-     * @ORM\Column(type="string", nullable=true)
-     *
-     * @Type("string")
-     *
-     * @var string
-     */
-    protected $localThumbnailPath;
-
-    /**
-     * The files extension
-     *
-     * @ORM\Column(type="string")
-     *
-     * @Type("string")
-     *
-     * @var string
-     */
-    protected $extension;
-
-    /**
-     * The size of the event in bytes
-     *
-     * @ORM\Column(type="integer")
-     *
-     * @Type("integer")
-     *
-     * @var integer
-     */
-    protected $size;
-
-    /**
-     * The dimensions of this file, if present, as string
-     *
-     * @ORM\Column(type="string")
-     *
-     * @Type("string")
-     *
-     * @var string
-     */
-    protected $dimensions;
+    private $file;
 
     /**
      * Author of this file
@@ -202,129 +146,43 @@ class File {
     }
 
     /**
-     * Gets the The link to this file.
+     * If manually uploading a file (i.e. not using Symfony Form) ensure an instance
+     * of 'UploadedFile' is injected into this setter to trigger the  update. If this
+     * bundle's configuration parameter 'inject_on_load' is set to 'true' this setter
+     * must be able to accept an instance of 'File' as the bundle will inject one here
+     * during Doctrine hydration.
      *
+     * @param File|UploadedFile $image
+     */
+    public function setFilePath(File $image = null) {
+        $this->filePath = $image;
+
+        if ($image) {
+            // It is required that at least one field changes if you are using doctrine
+            // otherwise the event listeners won't be called and the file is lost
+            $this->lastEditDate = new \DateTime();
+        }
+    }
+
+    /**
+     * @return File
+     */
+    public function getFilePath() {
+        return $this->filePath;
+    }
+
+    /**
      * @return string
      */
-    public function getLink() {
-        return $this->link;
+    public function getFile() {
+        return $this->file;
     }
 
     /**
-     * Sets the The link to this file.
-     *
-     * @param string $link the link
+     * @param string $file
      */
-    public function setLink($link) {
-        $this->link = $link;
-    }
-
-    /**
-     * Gets the The local path to this file.
-     *
-     * @return string
-     */
-    public function getLocalPath() {
-        return $this->localPath;
-    }
-
-    /**
-     * Sets the The local path to this file.
-     *
-     * @param string $localPath the local path
-     */
-    public function setLocalPath($localPath) {
-        $this->localPath = $localPath;
-    }
-
-    /**
-     * Gets the The link to a thumbnail of this file.
-     *
-     * @return string
-     */
-    public function getThumbnailLink() {
-        return $this->thumbnailLink;
-    }
-
-    /**
-     * Sets the The link to a thumbnail of this file.
-     *
-     * @param string $thumbnailLink the thumbnail link
-     */
-    public function setThumbnailLink($thumbnailLink) {
-        $this->thumbnailLink = $thumbnailLink;
-    }
-
-    /**
-     * Gets the The local path to the thumbnail of this file.
-     *
-     * @return string
-     */
-    public function getLocalThumbnailPath() {
-        return $this->localThumbnailPath;
-    }
-
-    /**
-     * Sets the The local path to the thumbnail of this file.
-     *
-     * @param string $localThumbnailPath the local thumbnail path
-     */
-    public function setLocalThumbnailPath($localThumbnailPath) {
-        $this->localThumbnailPath = $localThumbnailPath;
-    }
-
-    /**
-     * Gets the The files extension.
-     *
-     * @return string
-     */
-    public function getExtension() {
-        return $this->extension;
-    }
-
-    /**
-     * Sets the The files extension.
-     *
-     * @param string $extension the extension
-     */
-    public function setExtension($extension) {
-        $this->extension = $extension;
-    }
-
-    /**
-     * Gets the The size of the event in bytes.
-     *
-     * @return integer
-     */
-    public function getSize() {
-        return $this->size;
-    }
-
-    /**
-     * Sets the The size of the event in bytes.
-     *
-     * @param integer $size the size
-     */
-    public function setSize($size) {
-        $this->size = $size;
-    }
-
-    /**
-     * Gets the The dimensions of this file, if present, as string.
-     *
-     * @return string
-     */
-    public function getDimensions() {
-        return $this->dimensions;
-    }
-
-    /**
-     * Sets the The dimensions of this file, if present, as string.
-     *
-     * @param string $dimensions the dimensions
-     */
-    public function setDimensions($dimensions) {
-        $this->dimensions = $dimensions;
+    public function setFile($file) {
+        $this->file = $file;
     }
 
     /**

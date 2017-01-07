@@ -3,15 +3,10 @@
 namespace rmatil\CmsBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Vich\UploaderBundle\Mapping\Annotation as Vich;
-use Symfony\Component\HttpFoundation\File\File;
 
 /**
  * @ORM\Entity
  * @ORM\Table(name="events")
- *
- * @Vich\Uploadable
  **/
 class Event {
 
@@ -45,21 +40,11 @@ class Event {
     protected $location;
 
     /**
-     * NOTE: This is not a mapped field of entity metadata, just a simple property.
-     * Use this field in the form.
+     * @ORM\ManyToOne(targetEntity="File")
      *
-     * @Vich\UploadableField(mapping="event_image", fileNameProperty="file")
-     *
-     * @var File
+     * @var \rmatil\CmsBundle\Entity\File
      */
-    private $filePath;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     *
-     * @var string
-     */
-    private $file;
+    protected $file;
 
     /**
      * The name of the event
@@ -189,40 +174,14 @@ class Event {
     }
 
     /**
-     * If manually uploading a file (i.e. not using Symfony Form) ensure an instance
-     * of 'UploadedFile' is injected into this setter to trigger the  update. If this
-     * bundle's configuration parameter 'inject_on_load' is set to 'true' this setter
-     * must be able to accept an instance of 'File' as the bundle will inject one here
-     * during Doctrine hydration.
-     *
-     * @param File|UploadedFile $image
-     */
-    public function setFilePath(File $image = null) {
-        $this->filePath = $image;
-
-        if ($image) {
-            // It is required that at least one field changes if you are using doctrine
-            // otherwise the event listeners won't be called and the file is lost
-            $this->lastEditDate = new \DateTime();
-        }
-    }
-
-    /**
-     * @return File
-     */
-    public function getFilePath() {
-        return $this->filePath;
-    }
-
-    /**
-     * @return string
+     * @return \rmatil\CmsBundle\Entity\File
      */
     public function getFile() {
         return $this->file;
     }
 
     /**
-     * @param string $file
+     * @param \rmatil\CmsBundle\Entity\File $file
      */
     public function setFile($file) {
         $this->file = $file;
