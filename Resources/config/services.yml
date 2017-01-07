@@ -19,6 +19,10 @@ services:
         class: rmatil\CmsBundle\DataAccessor\PageDataAccessor
         arguments: ['@doctrine.orm.entity_manager', '@rmatil_cms.mapper.page_mapper', '@security.token_storage', '@logger']
 
+    rmatil_cms.data_accessor.event:
+        class: rmatil\CmsBundle\DataAccessor\EventDataAccessor
+        arguments: ['@doctrine.orm.entity_manager', '@rmatil_cms.mapper.event_mapper', '@security.token_storage', '@logger']
+
     rmatil_cms.mapper.article_category_mapper:
         class: rmatil\CmsBundle\Mapper\ArticleCategoryMapper
 
@@ -38,6 +42,20 @@ services:
     rmatil_cms.mapper.page_mapper:
         class: rmatil\CmsBundle\Mapper\PageMapper
         arguments: ['@rmatil_cms.mapper.article_mapper', '@rmatil_cms.mapper.language_mapper', '@rmatil_cms.mapper.user_group_mapper', '@rmatil_cms.mapper.user_mapper']
+
+    rmatil_cms.mapper.file_mapper:
+        class: rmatil\CmsBundle\Mapper\FileMapper
+        arguments: ['@rmatil_cms.mapper.user_mapper']
+
+    rmatil_cms.mapper.repeat_option:
+        class: rmatil\CmsBundle\Mapper\RepeatOptionMapper
+
+    rmatil_cms.mapper.event_mapper:
+        class: rmatil\CmsBundle\Mapper\EventMapper
+        arguments: ['@rmatil_cms.mapper.user_mapper', '@rmatil_cms.mapper.file_mapper', '@rmatil_cms.mapper.location_mapper', '@rmatil_cms.mapper.repeat_option', '@rmatil_cms.mapper.user_group_mapper']
+
+    rmatil_cms.mapper.location_mapper:
+        class: rmatil\CmsBundle\Mapper\LocationMapper
 
     rmatil_cms.security.restrictable_voter:
         class: rmatil\CmsBundle\Security\RestrictableVoter

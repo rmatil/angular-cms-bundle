@@ -52,8 +52,6 @@ class EventDTO {
     /**
      * The name of the event
      *
-     * @ORM\Column(type="string")
-     *
      * @Type("string")
      *
      * @var string
@@ -104,8 +102,6 @@ class EventDTO {
     /**
      * DateTime object of the last edit date
      *
-     * @ORM\Column(type="datetime")
-     *
      * @Type("DateTime<'Y-m-d\TH:i:sP', 'UTC'>")
      *
      * @var \DateTime
@@ -114,8 +110,6 @@ class EventDTO {
 
     /**
      * DateTime object of the creation date
-     *
-     * @ORM\Column(type="datetime")
      *
      * @Type("DateTime<'Y-m-d\TH:i:sP', 'UTC'>")
      *
@@ -135,8 +129,6 @@ class EventDTO {
 
     /**
      * Url name for the event
-     *
-     * @ORM\Column(type="string")
      *
      * @Type("string")
      *

@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 class FileController extends Controller {
 
     /**
-     * @Route("/events", name="get_events", methods={"GET"})
+     * @Route("/files", name="get_files", methods={"GET"})
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function getEventsAction() {
@@ -20,7 +20,7 @@ class FileController extends Controller {
     }
 
     /**
-     * @Route("/events/{id}", name="get_event", methods={"GET"})
+     * @Route("/files/{id}", name="get_file", methods={"GET"})
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function getEventsByIdAction($id) {
@@ -36,7 +36,7 @@ class FileController extends Controller {
      * @return \Symfony\Component\HttpFoundation\Response
      * @throws \Exception
      *
-     * @Route("/events", name="insert_event", methods={"POST"})
+     * @Route("/files", name="insert_file", methods={"POST"})
      */
     public function insertEventAction(Request $request) {
         $uploadedFile = null;

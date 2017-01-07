@@ -7,32 +7,47 @@ namespace rmatil\CmsBundle\DataAccessor;
 use DateTime;
 use DateTimeZone;
 use Doctrine\DBAL\DBALException;
+use Doctrine\ORM\EntityManagerInterface;
+use Psr\Log\LoggerInterface;
 use rmatil\CmsBundle\Constants\EntityNames;
-use rmatil\CmsBundle\Controller\UpdateUserGroupTrait;
-use rmatil\CmsBundle\Entities\Event;
-use rmatil\CmsBundle\Entities\File;
-use rmatil\CmsBundle\Entities\Location;
-use rmatil\CmsBundle\Entities\RepeatOption;
-use rmatil\CmsBundle\Entities\User;
+use rmatil\CmsBundle\Entity\File;
+use rmatil\CmsBundle\Entity\Location;
+use rmatil\CmsBundle\Entity\RepeatOption;
+use rmatil\CmsBundle\Entity\User;
 use rmatil\CmsBundle\Exception\EntityInvalidException;
 use rmatil\CmsBundle\Exception\EntityNotFoundException;
 use rmatil\CmsBundle\Exception\EntityNotInsertedException;
 use rmatil\CmsBundle\Exception\EntityNotUpdatedException;
+use rmatil\CmsBundle\Mapper\EventMapper;
+use rmatil\CmsBundle\Model\EventDTO;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class EventDataAccessor extends DataAccessor {
 
-    use UpdateUserGroupTrait;
+    protected $eventMapper;
 
-    public function __construct($em, $logger) {
-        parent::__construct(EntityNames::EVENT, $em, $logger);
+    public function __construct(EntityManagerInterface $em, EventMapper $eventMapper, TokenStorageInterface $tokenStorage, LoggerInterface $logger) {
+        parent::__construct(EntityNames::EVENT, $em, $tokenStorage, $logger);
+
+        $this->eventMapper = $eventMapper;
     }
 
-    public function update($event) {
-        if ( ! ($event instanceof Event)) {
-            throw new EntityInvalidException(sprintf('Required object of type "%s" but got "%s"', EntityNames::EVENT, get_class($event)));
+    public function getAll() {
+        return $this->eventMapper->entitiesToDtos(parent::getAll());
+    }
+
+    public function getById($id) {
+        return $this->eventMapper->entityToDto(parent::getById($id));
+    }
+
+    public function update($eventDto) {
+        if ( ! ($eventDto instanceof EventDTO)) {
+            throw new EntityInvalidException(sprintf('Required object of type "%s" but got "%s"', EventDTO::class, get_class($eventDto)));
         }
 
-        /** @var \rmatil\CmsBundle\Entities\Event $dbEvent */
+        $event = $this->eventMapper->dtoToEntity($eventDto);
+
+        /** @var \rmatil\CmsBundle\Entity\Event $dbEvent */
         $dbEvent = $this->em->getRepository(EntityNames::EVENT)->find($event->getId());
 
         if (null === $dbEvent) {
@@ -40,37 +55,45 @@ class EventDataAccessor extends DataAccessor {
         }
 
         if ($event->getAuthor() instanceof User) {
-            $event->setAuthor(
+            $dbEvent->setAuthor(
                 $this->em->getRepository(EntityNames::USER)->find($event->getAuthor()->getId())
             );
         }
 
         if ($event->getLocation() instanceof Location) {
-            $event->setLocation(
+            $dbEvent->setLocation(
                 $this->em->getRepository(EntityNames::LOCATION)->find($event->getLocation()->getId())
             );
         }
 
         if ($event->getFile() instanceof File) {
-            $event->setFile(
+            $dbEvent->setFile(
                 $this->em->getRepository(EntityNames::FILE)->find($event->getFile()->getId())
             );
         }
 
         if ($event->getRepeatOption() instanceof RepeatOption) {
-            $event->setRepeatOption(
+            $dbEvent->setRepeatOption(
                 $this->em->getRepository(EntityNames::REPEAT_OPTION)->find($event->getRepeatOption()->getId())
             );
         }
 
-        $allUserGroups = $this->em->getRepository(EntityNames::USER_GROUP)->findAll();
+        $allowedUserGroup = $event->getAllowedUserGroup();
+        if (null !== $allowedUserGroup) {
+            $dbEvent->setAllowedUserGroup(
+                $this->em->getRepository(EntityNames::USER_GROUP)->find($event->getAllowedUserGroup()->getId())
+            );
+        } else {
+            $dbEvent->setAllowedUserGroup(null);
+        }
 
-        $this->updateUserGroups($allUserGroups, $event, $dbEvent);
-
-        // Note: we prevent updating title and url name due to the uniqid
+        // Note: we prevent updating creation date and url name due to the uniqid
         // stored in url-name. Otherwise, permanent links would fail
-        $dbEvent->setFile($event->getFile());
-        $dbEvent->setDescription($event->getDescription());
+        // -> so no update here for this field
+        $dbEvent->setLastEditDate(new DateTime());
+        $dbEvent->setName($event->getName());
+        $dbEvent->setContent($event->getContent());
+        $dbEvent->setAdditionalInfo($event->getAdditionalInfo());
 
 
         // we get the correct timezone in the request,
@@ -94,13 +117,15 @@ class EventDataAccessor extends DataAccessor {
             throw new EntityNotUpdatedException(sprintf('Could not update entity "%s" with id "%s"', $this->entityName, $event->getId()));
         }
 
-        return $event;
+        return $this->eventMapper->entityToDto($dbEvent);
     }
 
-    public function insert($event) {
-        if ( ! ($event instanceof Event)) {
-            throw new EntityInvalidException(sprintf('Required object of type "%s" but got "%s"', EntityNames::EVENT, get_class($event)));
+    public function insert($eventDto) {
+        if ( ! ($eventDto instanceof EventDTO)) {
+            throw new EntityInvalidException(sprintf('Required object of type "%s" but got "%s"', EventDTO::class, get_class($eventDto)));
         }
+
+        $event = $this->eventMapper->dtoToEntity($eventDto);
 
         if ($event->getAuthor() instanceof User) {
             $event->setAuthor(
@@ -126,12 +151,26 @@ class EventDataAccessor extends DataAccessor {
             );
         }
 
-        $allUserGroups = $this->em->getRepository(EntityNames::USER_GROUP)->findAll();
-        $this->insertUserGroups($allUserGroups, $event);
+        $allowedUserGroup = $event->getAllowedUserGroup();
+        if (null !== $allowedUserGroup) {
+            $event->setAllowedUserGroup(
+                $this->em->getRepository(EntityNames::USER_GROUP)->find($event->getAllowedUserGroup()->getId())
+            );
+        }
 
-        $now = new DateTime('now', new DateTimeZone('UTC'));
-        $event->setLastEditDate($now);
-        $event->setCreationDate($now);
+        $event->setCreationDate(new DateTime('now', new DateTimeZone('UTC')));
+        $event->setLastEditDate(new DateTime('now', new DateTimeZone('UTC')));
+
+        // we get the correct timezone in the request,
+        // therefore we only have to apply the utc as timezone
+        $utc = new DateTimeZone("UTC");
+        if ($event->getStartDate() instanceof DateTime) {
+            $event->getStartDate()->setTimezone($utc);
+        }
+
+        if ($event->getEndDate() instanceof DateTime) {
+            $event->getEndDate()->setTimezone($utc);
+        }
 
         $uniqid = uniqid();
         $event->setUrlName(sprintf('%s-%s', $event->getUrlName(), $uniqid));
@@ -146,7 +185,7 @@ class EventDataAccessor extends DataAccessor {
             throw new EntityNotInsertedException(sprintf('Could not insert entity "%s"', $this->entityName));
         }
 
-        return $event;
+        return $this->eventMapper->entityToDto($event);
     }
 
 }
