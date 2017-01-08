@@ -37,9 +37,14 @@ class FileController extends Controller {
      */
     public function getFileByIdAction($id) {
         $responseFactory = $this->get('rmatil_cms.factory.json_response');
-        $file = $this->get('rmatil_cms.data_accessor.file')->getById($id);
 
-        return $responseFactory->createResponse($file);
+        try {
+            $file = $this->get('rmatil_cms.data_accessor.file')->getById($id);
+
+            return $responseFactory->createResponse($file);
+        } catch (EntityNotFoundException $ex) {
+            return $responseFactory->createNotFoundResponse($ex->getMessage());
+        }
     }
 
     /**
