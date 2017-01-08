@@ -56,7 +56,7 @@ class EventController extends Controller {
      *
      * @Route("/events/{id}", name="rmatil_cms_update_event", methods={"PUT"})
      */
-    public function updateArticleAction($id, Request $request) {
+    public function updateEventAction($id, Request $request) {
         $responseFactory = $this->get('rmatil_cms.factory.json_response');
 
         /** @var \rmatil\CmsBundle\Model\EventDTO $eventDto */
