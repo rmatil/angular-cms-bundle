@@ -60,10 +60,9 @@ class ArticleDataAccessor extends DataAccessor {
         }
 
         // author is current logged in user
+        $user = $this->tokenStorage->getToken()->getUser();
         $article->setAuthor(
-            $this->em->getRepository(EntityNames::USER)->findOneBy(
-                ['username' => $this->tokenStorage->getToken()->getUsername()]
-            )
+            $this->em->getRepository(EntityNames::USER)->find($user->getId())
         );
 
         if ($article->getCategory() instanceof ArticleCategory) {

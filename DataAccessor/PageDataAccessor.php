@@ -63,10 +63,9 @@ class PageDataAccessor extends DataAccessor {
         }
 
         // author is current logged in user
+        $user = $this->tokenStorage->getToken()->getUser();
         $page->setAuthor(
-            $this->em->getRepository(EntityNames::USER)->findOneBy(
-                ['username' => $this->tokenStorage->getToken()->getUsername()]
-            )
+            $this->em->getRepository(EntityNames::USER)->find($user->getId())
         );
 
         // remove all articles, then add only these who are checked
@@ -129,11 +128,9 @@ class PageDataAccessor extends DataAccessor {
 
         $page = $this->pageMapper->dtoToEntity($pageDto);
 
-        // author is current logged in user
+        $user = $this->tokenStorage->getToken()->getUser();
         $page->setAuthor(
-            $this->em->getRepository(EntityNames::USER)->findOneBy(
-                ['username' => $this->tokenStorage->getToken()->getUsername()]
-            )
+            $this->em->getRepository(EntityNames::USER)->find($user->getId())
         );
 
         if ($page->getLanguage() instanceof Language) {

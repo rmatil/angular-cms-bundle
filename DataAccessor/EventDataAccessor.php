@@ -54,11 +54,10 @@ class EventDataAccessor extends DataAccessor {
             throw new EntityNotFoundException(sprintf('Entity "%s" with id "%s" not found', $this->entityName, $event->getId()));
         }
 
-        if ($event->getAuthor() instanceof User) {
-            $dbEvent->setAuthor(
-                $this->em->getRepository(EntityNames::USER)->find($event->getAuthor()->getId())
-            );
-        }
+        $user = $this->tokenStorage->getToken()->getUser();
+        $dbEvent->setAuthor(
+            $this->em->getRepository(EntityNames::USER)->find($user->getId())
+        );
 
         if ($event->getLocation() instanceof Location) {
             $dbEvent->setLocation(
@@ -127,11 +126,10 @@ class EventDataAccessor extends DataAccessor {
 
         $event = $this->eventMapper->dtoToEntity($eventDto);
 
-        if ($event->getAuthor() instanceof User) {
-            $event->setAuthor(
-                $this->em->getRepository(EntityNames::USER)->find($event->getAuthor()->getId())
-            );
-        }
+        $user = $this->tokenStorage->getToken()->getUser();
+        $event->setAuthor(
+            $this->em->getRepository(EntityNames::USER)->find($user->getId())
+        );
 
         if ($event->getLocation() instanceof Location) {
             $event->setLocation(
