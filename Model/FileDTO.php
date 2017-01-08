@@ -4,9 +4,10 @@
 namespace rmatil\CmsBundle\Model;
 
 use DateTime;
+use JMS\Serializer\Annotation as Serializer;
 use JMS\Serializer\Annotation\MaxDepth;
 use JMS\Serializer\Annotation\Type;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\File\File;
 
 class FileDTO {
 
@@ -32,7 +33,9 @@ class FileDTO {
     private $description;
 
     /**
-     * @var UploadedFile
+     * @Serializer\Exclude()
+     *
+     * @var File
      */
     private $file;
 
@@ -101,16 +104,16 @@ class FileDTO {
     }
 
     /**
-     * @return UploadedFile
+     * @return File
      */
-    public function getFile(): ?UploadedFile {
+    public function getFile(): ?File {
         return $this->file;
     }
 
     /**
-     * @param UploadedFile $file
+     * @param File $file
      */
-    public function setFile(UploadedFile $file = null) {
+    public function setFile(File $file = null) {
         $this->file = $file;
     }
 

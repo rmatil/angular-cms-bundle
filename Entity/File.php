@@ -3,7 +3,6 @@
 namespace rmatil\CmsBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\HttpFoundation\File\File as HttpFoundationFile;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
@@ -48,9 +47,9 @@ class File {
      * NOTE: This is not a mapped field of entity metadata, just a simple property.
      * Use this field in the form.
      *
-     * @Vich\UploadableField(mapping="event_image", fileNameProperty="filePath")
+     * @Vich\UploadableField(mapping="upload", fileNameProperty="filePath")
      *
-     * @var File
+     * @var UploadedFile
      */
     private $file;
 
@@ -155,7 +154,7 @@ class File {
      *
      * @param \Symfony\Component\HttpFoundation\File\File|UploadedFile $image
      */
-    public function setFile(HttpFoundationFile $image = null) {
+    public function setFile(\Symfony\Component\HttpFoundation\File\File $image = null) {
         $this->file = $image;
 
         if ($image) {
@@ -166,7 +165,7 @@ class File {
     }
 
     /**
-     * @return File
+     * @return \Symfony\Component\HttpFoundation\File\File
      */
     public function getFile() {
         return $this->file;

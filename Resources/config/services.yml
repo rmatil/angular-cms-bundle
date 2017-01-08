@@ -23,6 +23,10 @@ services:
         class: rmatil\CmsBundle\DataAccessor\EventDataAccessor
         arguments: ['@doctrine.orm.entity_manager', '@rmatil_cms.mapper.event_mapper', '@security.token_storage', '@logger']
 
+    rmatil_cms.data_accessor.file:
+        class: rmatil\CmsBundle\DataAccessor\FileDataAccessor
+        arguments: ['@doctrine.orm.entity_manager', '@rmatil_cms.mapper.file_mapper', '@vich_uploader.templating.helper.uploader_helper', '@security.token_storage', '@logger']
+
     rmatil_cms.mapper.article_category_mapper:
         class: rmatil\CmsBundle\Mapper\ArticleCategoryMapper
 
