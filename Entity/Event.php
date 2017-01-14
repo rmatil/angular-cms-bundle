@@ -280,7 +280,7 @@ class Event {
     /**
      * @return string
      */
-    public function getAdditionalInfo(): string {
+    public function getAdditionalInfo(): ?string {
         return $this->additionalInfo;
     }
 
