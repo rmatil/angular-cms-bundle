@@ -2,6 +2,7 @@
 
 namespace rmatil\CmsBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
@@ -90,6 +91,17 @@ class File {
      * @var \DateTime
      */
     private $lastEditDate;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="MediaTag", mappedBy="files")
+     *
+     * @var ArrayCollection
+     */
+    private $tags;
+
+    public function __construct() {
+        $this->tags = new ArrayCollection();
+    }
 
     /**
      * Gets the The id of the File.
@@ -220,4 +232,37 @@ class File {
     public function setCreationDate(\DateTime $creationDate = null) {
         $this->creationDate = $creationDate;
     }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getTags() {
+        return $this->tags;
+    }
+
+    /**
+     * @param ArrayCollection $tags
+     */
+    public function setTags(ArrayCollection $tags) {
+        $this->tags = $tags;
+    }
+
+    /**
+     * Does not update the tag.
+     *
+     * @param \rmatil\CmsBundle\Entity\MediaTag $tag
+     */
+    public function addTag(MediaTag $tag) {
+        $this->tags->add($tag);
+    }
+
+    /**
+     * Does not update the tag.
+     *
+     * @param \rmatil\CmsBundle\Entity\MediaTag $tag
+     */
+    public function removeTag(MediaTag $tag) {
+        $this->tags->removeElement($tag);
+    }
+
 }

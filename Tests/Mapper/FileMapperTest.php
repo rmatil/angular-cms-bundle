@@ -6,10 +6,13 @@ namespace rmatil\CmsBundle\Tests\Mapper;
 
 use PHPUnit_Framework_TestCase;
 use rmatil\CmsBundle\Entity\File;
+use rmatil\CmsBundle\Entity\MediaTag;
 use rmatil\CmsBundle\Entity\User;
 use rmatil\CmsBundle\Mapper\FileMapper;
+use rmatil\CmsBundle\Mapper\MediaTagMapper;
 use rmatil\CmsBundle\Mapper\UserMapper;
 use rmatil\CmsBundle\Model\FileDTO;
+use rmatil\CmsBundle\Model\MediaTagDTO;
 use rmatil\CmsBundle\Model\UserDTO;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
@@ -27,12 +30,9 @@ class FileMapperTest extends PHPUnit_Framework_TestCase {
      */
     private $userMapper;
 
-
     public function setUp() {
         $this->userMapper = new UserMapper();
-        $this->fileMapper = new FileMapper(
-            $this->userMapper
-        );
+        $this->fileMapper = new FileMapper($this->userMapper);
     }
 
     /**
@@ -83,6 +83,9 @@ class FileMapperTest extends PHPUnit_Framework_TestCase {
         $author->setFirstName('Pepper');
         $author->setLastName('Middletoch');
 
+        $tag = new MediaTag();
+        $tag->setName('tag');
+
         $file = new File();
         $file->setId(1);
         $file->setName('some name');
@@ -91,6 +94,7 @@ class FileMapperTest extends PHPUnit_Framework_TestCase {
         $file->setFilePath(self::$FILE_NAME);
         $file->setAuthor($author);
         $file->setCreationDate(new \DateTime());
+        $file->addTag($tag);
 
         unlink(self::$FILE_NAME);
 
@@ -114,6 +118,9 @@ class FileMapperTest extends PHPUnit_Framework_TestCase {
         $author->setLastName('Schnitzel');
         $author->setRoles(['ROLE_USER']);
 
+        $mediaTagDto = new MediaTagDTO();
+        $mediaTagDto->setName('tag');
+
         $fileDto = new FileDTO();
         $fileDto->setId(2);
         $fileDto->setName('FileName');
@@ -122,6 +129,7 @@ class FileMapperTest extends PHPUnit_Framework_TestCase {
         $fileDto->setPath(self::$FILE_NAME);
         $fileDto->setAuthor($author);
         $fileDto->setCreationDate(new \DateTime());
+        $fileDto->setTags([$mediaTagDto]);
 
         unlink(self::$FILE_NAME);
 

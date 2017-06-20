@@ -62,6 +62,17 @@ class FileDTO {
     private $creationDate;
 
     /**
+     * @Serializer\Exclude()
+     *
+     * @var \rmatil\CmsBundle\Model\MediaTagDTO[]
+     */
+    private $tags;
+
+    public function __construct() {
+        $this->tags = [];
+    }
+
+    /**
      * @return int
      */
     public function getId(): ?int {
@@ -158,4 +169,20 @@ class FileDTO {
     public function setCreationDate(DateTime $creationDate = null) {
         $this->creationDate = $creationDate;
     }
+
+    /**
+     * @return \rmatil\CmsBundle\Model\MediaTagDTO[]
+     */
+    public function getTags(): ?array {
+        return $this->tags;
+    }
+
+    /**
+     * @param \rmatil\CmsBundle\Model\MediaTagDTO[] $tags
+     */
+    public function setTags(array $tags = null) {
+        $this->tags = $tags;
+    }
+
+
 }
