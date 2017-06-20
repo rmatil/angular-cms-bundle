@@ -25,8 +25,8 @@ abstract class AbstractMapper implements MapperInterface {
     public function dtosToEntities(array $dtos) : array {
         $entities = [];
 
-        foreach ($entities as $entity) {
-            $entities[] = $this->dtoToEntity($entity);
+        foreach ($dtos as $dto) {
+            $entities[] = $this->dtoToEntity($dto);
         }
 
         return $entities;
