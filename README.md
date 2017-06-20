@@ -60,6 +60,13 @@
         registration:
             confirmation:
                 enabled: true
+    
+    # Doctrine Migrations
+    doctrine_migrations:
+        dir_name: "%kernel.root_dir%/../src/rmatil/CmsBundle/Resources/doctrine-migrations"
+        namespace: Application\Migrations
+        table_name: migration_versions
+        name: Application Migrations
 
 ```
 
