@@ -15,13 +15,15 @@ class EventMapper extends AbstractMapper {
     protected $locationMapper;
     protected $repeatOptionMapper;
     protected $userGroupMapper;
+    protected $eventDetailMapper;
 
-    public function __construct(UserMapper $userMapper, FileMapper $fileMapper, LocationMapper $locationMapper, RepeatOptionMapper $repeatOptionMapper, UserGroupMapper $userGroupMapper) {
+    public function __construct(UserMapper $userMapper, FileMapper $fileMapper, LocationMapper $locationMapper, RepeatOptionMapper $repeatOptionMapper, UserGroupMapper $userGroupMapper, EventDetailMapper $eventDetailMapper) {
         $this->userMapper = $userMapper;
         $this->fileMapper = $fileMapper;
         $this->locationMapper = $locationMapper;
         $this->repeatOptionMapper = $repeatOptionMapper;
         $this->userGroupMapper = $userGroupMapper;
+        $this->eventDetailMapper = $eventDetailMapper;
     }
 
     /**
@@ -55,6 +57,7 @@ class EventMapper extends AbstractMapper {
         $dto->setCreationDate($event->getCreationDate());
         $dto->setAllowedUserGroup($this->userGroupMapper->entityToDto($event->getAllowedUserGroup()));
         $dto->setUrlName($event->getUrlName());
+        $dto->setEventDetail($this->eventDetailMapper->entityToDto($event->getEventDetail()));
 
         return $dto;
     }
@@ -90,6 +93,7 @@ class EventMapper extends AbstractMapper {
         $event->setCreationDate($eventDto->getCreationDate());
         $event->setAllowedUserGroup($this->userGroupMapper->dtoToEntity($eventDto->getAllowedUserGroup()));
         $event->setUrlName($eventDto->getUrlName());
+        $event->setEventDetail($this->eventDetailMapper->dtoToEntity($eventDto->getEventDetail()));
 
         return $event;
     }

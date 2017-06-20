@@ -24,14 +24,14 @@ class EventDetail {
     private $id;
 
     /**
-     * @ORM\OneToMany(targetEntity="Offer", mappedBy="EventDetail")
+     * @ORM\OneToMany(targetEntity="Offer", mappedBy="eventDetail")
      *
      * @var ArrayCollection
      */
     private $offers;
 
     /**
-     * @ORM\OneToOne(targetEntity="Event", inversedBy="eventDetail")
+     * @ORM\OneToOne(targetEntity="Event",  mappedBy="eventDetail")
      *
      * @var Event
      */
@@ -59,7 +59,7 @@ class EventDetail {
     /**
      * @return ArrayCollection
      */
-    public function getOffers(): ?ArrayCollection {
+    public function getOffers() {
         return $this->offers;
     }
 

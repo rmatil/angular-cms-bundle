@@ -60,10 +60,17 @@ services:
 
     rmatil_cms.mapper.event_mapper:
         class: rmatil\CmsBundle\Mapper\EventMapper
-        arguments: ['@rmatil_cms.mapper.user_mapper', '@rmatil_cms.mapper.file_mapper', '@rmatil_cms.mapper.location_mapper', '@rmatil_cms.mapper.repeat_option', '@rmatil_cms.mapper.user_group_mapper']
+        arguments: ['@rmatil_cms.mapper.user_mapper', '@rmatil_cms.mapper.file_mapper', '@rmatil_cms.mapper.location_mapper', '@rmatil_cms.mapper.repeat_option', '@rmatil_cms.mapper.user_group_mapper', '@rmatil_cms.mapper.event_detail_mapper']
 
     rmatil_cms.mapper.location_mapper:
         class: rmatil\CmsBundle\Mapper\LocationMapper
+
+    rmatil_cms.mapper.event_detail_mapper:
+        class: rmatil\CmsBundle\Mapper\EventDetailMapper
+        arguments: ['@rmatil_cms.mapper.offer_mapper']
+
+    rmatil_cms.mapper.offer_mapper:
+        class: rmatil\CmsBundle\Mapper\OfferMapper
 
     rmatil_cms.security.restrictable_voter:
         class: rmatil\CmsBundle\Security\RestrictableVoter

@@ -53,7 +53,7 @@ class Offer {
     /**
      * The url to the offer provided, if any
      *
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      *
      * @var string
      */
@@ -137,14 +137,14 @@ class Offer {
     }
 
     /**
-     * @return mixed
+     * @return \rmatil\CmsBundle\Entity\EventDetail
      */
     public function getEventDetail() {
         return $this->eventDetail;
     }
 
     /**
-     * @param mixed $eventDetail
+     * @param \rmatil\CmsBundle\Entity\EventDetail $eventDetail
      */
     public function setEventDetail($eventDetail) {
         $this->eventDetail = $eventDetail;

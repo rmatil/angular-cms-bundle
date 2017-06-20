@@ -136,6 +136,13 @@ class Event {
      */
     protected $urlName;
 
+    /**
+     * @ORM\OneToOne(targetEntity="EventDetail", inversedBy="event")
+     *
+     * @var EventDetail
+     */
+    protected $eventDetail;
+
 
     /**
      * Gets the The author of this article.
@@ -375,5 +382,19 @@ class Event {
      */
     public function setUrlName($urlName) {
         $this->urlName = $urlName;
+    }
+
+    /**
+     * @return EventDetail
+     */
+    public function getEventDetail(): ?EventDetail {
+        return $this->eventDetail;
+    }
+
+    /**
+     * @param EventDetail $eventDetail
+     */
+    public function setEventDetail(EventDetail $eventDetail = null) {
+        $this->eventDetail = $eventDetail;
     }
 }

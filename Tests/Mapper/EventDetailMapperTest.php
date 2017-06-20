@@ -12,6 +12,7 @@ use rmatil\CmsBundle\Entity\Offer;
 use rmatil\CmsBundle\Mapper\EventDetailMapper;
 use rmatil\CmsBundle\Mapper\OfferMapper;
 use rmatil\CmsBundle\Model\EventDetailDTO;
+use rmatil\CmsBundle\Model\OfferDTO;
 
 class EventDetailMapperTest extends PHPUnit_Framework_TestCase {
 
@@ -68,7 +69,7 @@ class EventDetailMapperTest extends PHPUnit_Framework_TestCase {
     public function dtoProvider() {
         $eventDetailDto = new EventDetailDTO();
         $eventDetailDto->setId(2);
-        $eventDetailDto->setOffers([new Offer()]);
+        $eventDetailDto->setOffers([new OfferDTO()]);
 
 
         return [

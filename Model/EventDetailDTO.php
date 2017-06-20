@@ -16,7 +16,7 @@ class EventDetailDTO {
     private $id;
 
     /**
-     * @Type("rmatil\CmsBundle\Model\OfferDTO")
+     * @Type("array<rmatil\CmsBundle\Model\OfferDTO>")
      * @Serializer\MaxDepth(2)
      *
      * @var \rmatil\CmsBundle\Model\OfferDTO[]

@@ -5,22 +5,29 @@ namespace rmatil\CmsBundle\Tests\Mapper;
 
 
 use DateTime;
+use Doctrine\Common\Collections\ArrayCollection;
 use PHPUnit_Framework_TestCase;
 use rmatil\CmsBundle\Entity\Event;
+use rmatil\CmsBundle\Entity\EventDetail;
 use rmatil\CmsBundle\Entity\File;
 use rmatil\CmsBundle\Entity\Location;
+use rmatil\CmsBundle\Entity\Offer;
 use rmatil\CmsBundle\Entity\RepeatOption;
 use rmatil\CmsBundle\Entity\User;
 use rmatil\CmsBundle\Entity\UserGroup;
+use rmatil\CmsBundle\Mapper\EventDetailMapper;
 use rmatil\CmsBundle\Mapper\EventMapper;
 use rmatil\CmsBundle\Mapper\FileMapper;
 use rmatil\CmsBundle\Mapper\LocationMapper;
+use rmatil\CmsBundle\Mapper\OfferMapper;
 use rmatil\CmsBundle\Mapper\RepeatOptionMapper;
 use rmatil\CmsBundle\Mapper\UserGroupMapper;
 use rmatil\CmsBundle\Mapper\UserMapper;
+use rmatil\CmsBundle\Model\EventDetailDTO;
 use rmatil\CmsBundle\Model\EventDTO;
 use rmatil\CmsBundle\Model\FileDTO;
 use rmatil\CmsBundle\Model\LocationDTO;
+use rmatil\CmsBundle\Model\OfferDTO;
 use rmatil\CmsBundle\Model\RepeatOptionDTO;
 use rmatil\CmsBundle\Model\UserDTO;
 use rmatil\CmsBundle\Model\UserGroupDTO;
@@ -57,19 +64,26 @@ class EventMapperTest extends PHPUnit_Framework_TestCase {
      */
     private $eventMapper;
 
+    /**
+     * @var EventDetailMapper
+     */
+    private $eventDetailMapper;
+
     public function setUp() {
         $this->userMapper = new UserMapper();
         $this->fileMapper = new FileMapper($this->userMapper);
         $this->locationMapper = new LocationMapper();
         $this->repeatOptionMapper = new RepeatOptionMapper();
         $this->userGroupMapper = new UserGroupMapper();
+        $this->eventDetailMapper = new EventDetailMapper(new OfferMapper());
 
         $this->eventMapper = new EventMapper(
             $this->userMapper,
             $this->fileMapper,
             $this->locationMapper,
             $this->repeatOptionMapper,
-            $this->userGroupMapper
+            $this->userGroupMapper,
+            $this->eventDetailMapper
         );
     }
 
@@ -95,6 +109,7 @@ class EventMapperTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals($event->getCreationDate(), $dto->getCreationDate());
         $this->assertEquals($this->userGroupMapper->entityToDto($event->getAllowedUserGroup()), $dto->getAllowedUserGroup());
         $this->assertEquals($event->getUrlName(), $dto->getUrlName());
+        $this->assertEquals($this->eventDetailMapper->entityToDto($event->getEventDetail()), $dto->getEventDetail());
     }
 
     /**
@@ -119,6 +134,7 @@ class EventMapperTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals($dto->getCreationDate(), $event->getCreationDate());
         $this->assertEquals($this->userGroupMapper->dtoToEntity($dto->getAllowedUserGroup()), $event->getAllowedUserGroup());
         $this->assertEquals($dto->getUrlName(), $event->getUrlName());
+        $this->assertEquals($this->eventDetailMapper->dtoToEntity($dto->getEventDetail()), $event->getEventDetail());
     }
 
     public function entityProvider() {
@@ -132,6 +148,8 @@ class EventMapperTest extends PHPUnit_Framework_TestCase {
         $option->setId(1);
         $userGroup = new UserGroup();
         $userGroup->setId(1);
+        $eventDetail = new EventDetail();
+        $eventDetail->setOffers(new ArrayCollection([new Offer()]));
 
         $event = new Event();
         $event->setId(1);
@@ -148,6 +166,7 @@ class EventMapperTest extends PHPUnit_Framework_TestCase {
         $event->setCreationDate(new DateTime());
         $event->setAllowedUserGroup($userGroup);
         $event->setUrlName('url-name');
+        $event->setEventDetail($eventDetail);
 
         return [
             [$event]
@@ -156,6 +175,8 @@ class EventMapperTest extends PHPUnit_Framework_TestCase {
 
     public function dtoProvider() {
         $author = new UserDTO();
+        $eventDetail = new EventDetailDTO();
+        $eventDetail->setOffers([new OfferDTO()]);
 
         $dto = new EventDTO();
         $dto->setId(1);
@@ -172,6 +193,7 @@ class EventMapperTest extends PHPUnit_Framework_TestCase {
         $dto->setCreationDate(new DateTime());
         $dto->setAllowedUserGroup(new UserGroupDTO());
         $dto->setUrlName('url-name');
+        $dto->setEventDetail($eventDetail);
 
         return [
             [$dto]

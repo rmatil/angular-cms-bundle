@@ -6,12 +6,15 @@ namespace rmatil\CmsBundle\DataAccessor;
 
 use DateTime;
 use DateTimeZone;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\DBAL\DBALException;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use rmatil\CmsBundle\Constants\EntityNames;
+use rmatil\CmsBundle\Entity\EventDetail;
 use rmatil\CmsBundle\Entity\File;
 use rmatil\CmsBundle\Entity\Location;
+use rmatil\CmsBundle\Entity\Offer;
 use rmatil\CmsBundle\Entity\RepeatOption;
 use rmatil\CmsBundle\Entity\User;
 use rmatil\CmsBundle\Exception\EntityInvalidException;
@@ -75,6 +78,62 @@ class EventDataAccessor extends DataAccessor {
             $dbEvent->setRepeatOption(
                 $this->em->getRepository(EntityNames::REPEAT_OPTION)->find($event->getRepeatOption()->getId())
             );
+        }
+
+        // we persist the detail if it does not exist
+        if ($event->getEventDetail() instanceof EventDetail) {
+            $eventDetail = $event->getEventDetail();
+            $dbDetail = $dbEvent->getEventDetail();
+
+            // nothing found in the database
+            if (null === $dbDetail) {
+                $eventDetail->setEvent($dbEvent);
+                $this->em->persist($eventDetail);
+                $dbDetail = $eventDetail;
+            }
+
+            // we persist any offer we may have found in the detail...
+            $offers = $event->getEventDetail()->getOffers();
+            $persistedOffers = new ArrayCollection();
+            if ($offers instanceof ArrayCollection) {
+                foreach ($offers as $offer) {
+                    if ($offer->getId() !== null) {
+                        $dbOffer = $this->em->getRepository(Offer::class)->find($offer->getId());
+
+                        // db offer belongs to a different event detail, we may not reassign it
+                        if ($dbOffer->getEventDetail()->getId() !== $dbEvent->getEventDetail()->getId()) {
+                            $this->logger->critical(sprintf('Offer with id "%s" belongs to another event detail, i.e. "%s". Not reassigning.', $offer->getId(), $dbOffer->getEventDetail()->getId()));
+                            $dbOffer = null;
+                        }
+
+                        // updating values is permitted here
+                        if (null !== $dbOffer) {
+                            $dbOffer->setName($offer->getName());
+                            $dbOffer->setAmount($offer->getAmount());
+                            $dbOffer->setCurrency($offer->getCurrency());
+                            $dbOffer->setUrl($offer->getUrl());
+
+                            $persistedOffers->add($dbOffer);
+                        }
+                    } else {
+                        $offer->setEventDetail($dbDetail);
+                        $this->em->persist($offer);
+                        $persistedOffers->add($offer);
+                    }
+                }
+            }
+
+            $dbOffers = $dbEvent->getEventDetail()->getOffers();
+            foreach ($dbOffers as $dbOffer) {
+                if (! $persistedOffers->contains($dbOffer)) {
+                    // release relation
+                    $dbOffer->setEventDetail(null);
+                    $this->em->remove($dbOffer);
+                }
+            }
+
+            $dbEvent->getEventDetail()->setOffers($persistedOffers);
+
         }
 
         $allowedUserGroup = $event->getAllowedUserGroup();
@@ -148,6 +207,49 @@ class EventDataAccessor extends DataAccessor {
                 $this->em->getRepository(EntityNames::REPEAT_OPTION)->find($event->getRepeatOption()->getId())
             );
         }
+
+        // we persist the detail if it does not exist
+        if ($event->getEventDetail() instanceof EventDetail) {
+            $eventDetail = $event->getEventDetail();
+            $dbDetail = null;
+            if ($eventDetail->getId() !== null) {
+                $dbDetail = $this->em->getRepository(EventDetail::class)->find($eventDetail->getId());
+            }
+
+            // nothing found in the database
+            if (null === $dbDetail) {
+                $eventDetail->setEvent($event);
+                $this->em->persist($eventDetail);
+            }
+
+            // we persist any offer we may have found in the detail...
+            $offers = $event->getEventDetail()->getOffers();
+            $persistedOffers = new ArrayCollection();
+            if ($offers instanceof ArrayCollection) {
+                foreach ($offers as $offer) {
+                    if ($offer->getId() !== null) {
+                        $dbOffer = $this->em->getRepository(Offer::class)->find($offer->getId());
+
+                        // db offer belongs to a different event detail, we may not reassign it
+                        if ($dbOffer->getEventDetail()->getId() !== $event->getEventDetail()->getId()) {
+                            $this->logger->critical(sprintf('Offer with id "%s" belongs to another event detail, i.e. "%s". Not reassigning.', $offer->getId(), $dbOffer->getEventDetail()->getId()));
+                            $dbOffer = null;
+                        }
+
+                        // updating values is not permitted at all
+                        if (null !== $dbOffer) {
+                            $persistedOffers->add($dbOffer);
+                        }
+                    } else {
+                        $offer->setEventDetail($event->getEventDetail());
+                        $this->em->persist($offer);
+                        $persistedOffers->add($offer);
+                    }
+                }
+            }
+            $event->getEventDetail()->setOffers($persistedOffers);
+        }
+
 
         $allowedUserGroup = $event->getAllowedUserGroup();
         if (null !== $allowedUserGroup) {

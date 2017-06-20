@@ -7,6 +7,7 @@ namespace rmatil\CmsBundle\Model;
 use DateTime;
 use JMS\Serializer\Annotation\MaxDepth;
 use JMS\Serializer\Annotation\Type;
+use rmatil\CmsBundle\Model\EventDetailDTO;
 
 class EventDTO {
 
@@ -135,6 +136,16 @@ class EventDTO {
      * @var string
      */
     protected $urlName;
+
+    /**
+     * The user group which is allowed to access this event.
+     *
+     * @Type("rmatil\CmsBundle\Model\EventDetailDTO")
+     * @MaxDepth(3)
+     *
+     * @var EventDetailDTO
+     */
+    protected $eventDetail;
 
     /**
      * @return int
@@ -331,4 +342,20 @@ class EventDTO {
     public function setUrlName(string $urlName = null) {
         $this->urlName = $urlName;
     }
+
+    /**
+     * @return \rmatil\CmsBundle\Model\EventDetailDTO
+     */
+    public function getEventDetail(): ?EventDetailDTO {
+        return $this->eventDetail;
+    }
+
+    /**
+     * @param \rmatil\CmsBundle\Model\EventDetailDTO $eventDetail
+     */
+    public function setEventDetail(EventDetailDTO $eventDetail = null) {
+        $this->eventDetail = $eventDetail;
+    }
+
+
 }
