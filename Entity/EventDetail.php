@@ -24,6 +24,14 @@ class EventDetail {
     private $id;
 
     /**
+     *
+     * @ORM\Column(type="string", nullable=true)
+     *
+     * @var string
+     */
+    private $color;
+
+    /**
      * @ORM\OneToMany(targetEntity="Offer", mappedBy="eventDetail")
      *
      * @var ArrayCollection
@@ -54,6 +62,20 @@ class EventDetail {
      */
     public function setId(int $id = null) {
         $this->id = $id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getColor(): ?string {
+        return $this->color;
+    }
+
+    /**
+     * @param string $color
+     */
+    public function setColor(string $color = null) {
+        $this->color = $color;
     }
 
     /**

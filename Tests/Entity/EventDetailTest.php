@@ -30,12 +30,14 @@ class EventDetailTest extends PHPUnit_Framework_TestCase {
     /**
      * @dataProvider dataProvider
      */
-    public function testAccessors($id, $offers, $event) {
+    public function testAccessors($id, $color, $offers, $event) {
         $this->eventDetail->setId($id);
+        $this->eventDetail->setColor($color);
         $this->eventDetail->setOffers($offers);
         $this->eventDetail->setEvent($event);
 
         $this->assertEquals($id, $this->eventDetail->getId());
+        $this->assertEquals($color, $this->eventDetail->getColor());
         $this->assertEquals($offers, $this->eventDetail->getOffers());
         $this->assertEquals($event, $this->eventDetail->getEvent());
     }
@@ -47,8 +49,8 @@ class EventDetailTest extends PHPUnit_Framework_TestCase {
         $offers = new ArrayCollection([$offer]);
 
         return [
-            [1, null, null],
-            [2, $offers, $event]
+            [1, "#123", null, null],
+            [2, "#123", $offers, $event]
         ];
     }
 }

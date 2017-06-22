@@ -35,6 +35,7 @@ class EventDetailMapper extends AbstractMapper {
 
         $dto = new EventDetailDTO();
         $dto->setId($eventDetail->getId());
+        $dto->setColor($eventDetail->getColor());
         $dto->setOffers($this->offerMapper->entitiesToDtos($eventDetail->getOffers()->toArray()));
 
         return $dto;
@@ -58,6 +59,7 @@ class EventDetailMapper extends AbstractMapper {
 
         $eventDetail = new EventDetail();
         $eventDetail->setId($eventDetailDto->getId());
+        $eventDetail->setColor($eventDetailDto->getColor());
         $eventDetail->setOffers(new ArrayCollection($this->offerMapper->dtosToEntities($eventDetailDto->getOffers())));
 
         return $eventDetail;

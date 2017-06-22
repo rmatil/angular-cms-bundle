@@ -16,6 +16,13 @@ class EventDetailDTO {
     private $id;
 
     /**
+     * @Type("string")
+     *
+     * @var string
+     */
+    private $color;
+
+    /**
      * @Type("array<rmatil\CmsBundle\Model\OfferDTO>")
      * @Serializer\MaxDepth(2)
      *
@@ -35,6 +42,20 @@ class EventDetailDTO {
      */
     public function setId(int $id = null) {
         $this->id = $id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getColor(): ?string {
+        return $this->color;
+    }
+
+    /**
+     * @param string $color
+     */
+    public function setColor(string $color = null) {
+        $this->color = $color;
     }
 
     /**

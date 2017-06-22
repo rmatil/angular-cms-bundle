@@ -40,6 +40,7 @@ class EventDetailMapperTest extends PHPUnit_Framework_TestCase {
         $dto = $this->eventDetailMapper->entityToDto($entity);
 
         $this->assertEquals($entity->getId(), $dto->getId());
+        $this->assertEquals($entity->getColor(), $dto->getColor());
         $this->assertEquals($this->offerMapper->entitiesToDtos($entity->getOffers()->toArray()), $dto->getOffers());
     }
 
@@ -52,12 +53,14 @@ class EventDetailMapperTest extends PHPUnit_Framework_TestCase {
         $entity = $this->eventDetailMapper->dtoToEntity($dto);
 
         $this->assertEquals($dto->getId(), $entity->getId());
+        $this->assertEquals($dto->getColor(), $entity->getColor());
         $this->assertEquals($this->offerMapper->dtosToEntities($dto->getOffers()), $entity->getOffers()->toArray());
     }
 
     public function entityProvider() {
         $eventDetail = new EventDetail();
         $eventDetail->setId(1);
+        $eventDetail->setColor("#123");
         $eventDetail->setEvent(new Event());
         $eventDetail->setOffers(new ArrayCollection([new Offer()]));
 
@@ -69,6 +72,7 @@ class EventDetailMapperTest extends PHPUnit_Framework_TestCase {
     public function dtoProvider() {
         $eventDetailDto = new EventDetailDTO();
         $eventDetailDto->setId(2);
+        $eventDetailDto->setColor("#123");
         $eventDetailDto->setOffers([new OfferDTO()]);
 
 
