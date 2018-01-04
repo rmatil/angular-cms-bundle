@@ -4,10 +4,10 @@
 namespace Entity;
 
 
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use rmatil\CmsBundle\Entity\ArticleCategory;
 
-class ArticleCategoryTest extends PHPUnit_Framework_TestCase {
+class ArticleCategoryTest extends TestCase {
 
     /**
      * @var ArticleCategory

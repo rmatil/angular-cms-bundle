@@ -6,7 +6,7 @@ namespace rmatil\CmsBundle\Tests\Mapper;
 
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use rmatil\CmsBundle\Entity\Event;
 use rmatil\CmsBundle\Entity\EventDetail;
 use rmatil\CmsBundle\Entity\File;
@@ -32,7 +32,7 @@ use rmatil\CmsBundle\Model\RepeatOptionDTO;
 use rmatil\CmsBundle\Model\UserDTO;
 use rmatil\CmsBundle\Model\UserGroupDTO;
 
-class EventMapperTest extends PHPUnit_Framework_TestCase {
+class EventMapperTest extends TestCase {
 
     /**
      * @var UserMapper

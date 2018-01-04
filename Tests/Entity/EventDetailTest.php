@@ -4,19 +4,13 @@
 namespace rmatil\CmsBundle\Tests\Entity;
 
 
-use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
-use PHPUnit_Framework_TestCase;
-use rmatil\CmsBundle\Entity\Article;
+use PHPUnit\Framework\TestCase;
 use rmatil\CmsBundle\Entity\Event;
 use rmatil\CmsBundle\Entity\EventDetail;
-use rmatil\CmsBundle\Entity\Language;
 use rmatil\CmsBundle\Entity\Offer;
-use rmatil\CmsBundle\Entity\Page;
-use rmatil\CmsBundle\Entity\User;
-use rmatil\CmsBundle\Entity\UserGroup;
 
-class EventDetailTest extends PHPUnit_Framework_TestCase {
+class EventDetailTest extends TestCase {
 
     /**
      * @var \rmatil\CmsBundle\Entity\EventDetail

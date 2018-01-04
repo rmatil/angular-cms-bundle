@@ -4,12 +4,12 @@
 namespace rmatil\CmsBundle\Tests\Mapper;
 
 
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use rmatil\CmsBundle\Entity\RepeatOption;
 use rmatil\CmsBundle\Mapper\RepeatOptionMapper;
 use rmatil\CmsBundle\Model\RepeatOptionDTO;
 
-class RepeatOptionMapperTest extends PHPUnit_Framework_TestCase {
+class RepeatOptionMapperTest extends TestCase {
 
     /**
      * @var RepeatOptionMapper

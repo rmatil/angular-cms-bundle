@@ -4,10 +4,10 @@
 namespace rmatil\CmsBundle\Tests\Entity;
 
 
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use rmatil\CmsBundle\Entity\RepeatOption;
 
-class RepeatOptionTest extends PHPUnit_Framework_TestCase {
+class RepeatOptionTest extends TestCase {
 
     /**
      * @var RepeatOption

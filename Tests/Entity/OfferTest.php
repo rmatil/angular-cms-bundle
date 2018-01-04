@@ -4,11 +4,11 @@
 namespace rmatil\CmsBundle\Tests\Entity;
 
 
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use rmatil\CmsBundle\Entity\EventDetail;
 use rmatil\CmsBundle\Entity\Offer;
 
-class OfferTest extends PHPUnit_Framework_TestCase {
+class OfferTest extends TestCase {
 
     /**
      * @var Offer

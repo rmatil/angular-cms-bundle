@@ -4,22 +4,16 @@
 namespace rmatil\CmsBundle\Tests\Mapper;
 
 
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use rmatil\CmsBundle\Entity\File;
-use rmatil\CmsBundle\Entity\Location;
 use rmatil\CmsBundle\Entity\MediaTag;
-use rmatil\CmsBundle\Entity\Offer;
 use rmatil\CmsBundle\Mapper\FileMapper;
-use rmatil\CmsBundle\Mapper\LocationMapper;
 use rmatil\CmsBundle\Mapper\MediaTagMapper;
-use rmatil\CmsBundle\Mapper\OfferMapper;
 use rmatil\CmsBundle\Mapper\UserMapper;
 use rmatil\CmsBundle\Model\FileDTO;
-use rmatil\CmsBundle\Model\LocationDTO;
 use rmatil\CmsBundle\Model\MediaTagDTO;
-use rmatil\CmsBundle\Model\OfferDTO;
 
-class MediaTagMapperTest extends PHPUnit_Framework_TestCase {
+class MediaTagMapperTest extends TestCase {
 
     /**
      * @var \rmatil\CmsBundle\Mapper\MediaTagMapper

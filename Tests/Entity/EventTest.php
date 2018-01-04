@@ -4,7 +4,7 @@
 namespace rmatil\CmsBundle\Tests\Entity;
 
 
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use rmatil\CmsBundle\Entity\Event;
 use rmatil\CmsBundle\Entity\File;
 use rmatil\CmsBundle\Entity\Location;
@@ -12,7 +12,7 @@ use rmatil\CmsBundle\Entity\RepeatOption;
 use rmatil\CmsBundle\Entity\User;
 use rmatil\CmsBundle\Entity\UserGroup;
 
-class EventTest extends PHPUnit_Framework_TestCase {
+class EventTest extends TestCase {
 
     /**
      * @var Event

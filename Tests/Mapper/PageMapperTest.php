@@ -6,11 +6,10 @@ namespace rmatil\CmsBundle\Tests\Mapper;
 
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use rmatil\CmsBundle\Entity\Article;
 use rmatil\CmsBundle\Entity\Language;
 use rmatil\CmsBundle\Entity\Page;
-use rmatil\CmsBundle\Entity\User;
 use rmatil\CmsBundle\Entity\UserGroup;
 use rmatil\CmsBundle\Mapper\ArticleCategoryMapper;
 use rmatil\CmsBundle\Mapper\ArticleMapper;
@@ -19,7 +18,7 @@ use rmatil\CmsBundle\Mapper\PageMapper;
 use rmatil\CmsBundle\Mapper\UserGroupMapper;
 use rmatil\CmsBundle\Mapper\UserMapper;
 
-class PageMapperTest extends PHPUnit_Framework_TestCase {
+class PageMapperTest extends TestCase {
 
     /**
      * @var PageMapper

@@ -5,12 +5,12 @@ namespace rmatil\CmsBundle\Tests\Mapper;
 
 
 use DateTime;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use rmatil\CmsBundle\Entity\User;
 use rmatil\CmsBundle\Mapper\UserMapper;
 use rmatil\CmsBundle\Model\UserDTO;
 
-class UserMapperTest extends PHPUnit_Framework_TestCase {
+class UserMapperTest extends TestCase {
 
     /**
      * @var UserMapper

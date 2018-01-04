@@ -6,14 +6,14 @@ namespace rmatil\CmsBundle\Tests\Entity;
 
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use rmatil\CmsBundle\Entity\Article;
 use rmatil\CmsBundle\Entity\Language;
 use rmatil\CmsBundle\Entity\Page;
 use rmatil\CmsBundle\Entity\User;
 use rmatil\CmsBundle\Entity\UserGroup;
 
-class PageTest extends PHPUnit_Framework_TestCase {
+class PageTest extends TestCase {
 
     /**
      * @var Page
@@ -40,6 +40,19 @@ class PageTest extends PHPUnit_Framework_TestCase {
         $this->page->setCreationDate($creationDate);
         $this->page->setAllowedUserGroup($allowedUserGroup);
         $this->page->setIsStartPage($isStartPage);
+
+        $this->assertEquals($id, $this->page->getId());
+        $this->assertEquals($urlName, $this->page->getUrlName());
+        $this->assertEquals($author, $this->page->getAuthor());
+        $this->assertEquals($language, $this->page->getLanguage());
+        $this->assertEquals($title, $this->page->getTitle());
+        $this->assertEquals($parent, $this->page->getParent());
+        $this->assertEquals($articles, $this->page->getArticles());
+        $this->assertEquals($isPublished, $this->page->getIsPublished());
+        $this->assertEquals($lastEditDate, $this->page->getLastEditDate());
+        $this->assertEquals($creationDate, $this->page->getCreationDate());
+        $this->assertEquals($allowedUserGroup, $this->page->getAllowedUserGroup());
+        $this->assertEquals($isStartPage, $this->page->getIsStartPage());
     }
 
     public function dataProvider() {

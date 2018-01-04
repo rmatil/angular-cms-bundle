@@ -4,12 +4,12 @@
 namespace rmatil\CmsBundle\Tests\Entity;
 
 
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use rmatil\CmsBundle\Entity\File;
 use rmatil\CmsBundle\Entity\User;
 use Symfony\Component\HttpFoundation\File\File as SymfonyFile;
 
-class FileTest extends PHPUnit_Framework_TestCase {
+class FileTest extends TestCase {
 
     private static $FILE_NAME = __DIR__ . '/rmatil_cms_someFile.txt';
 

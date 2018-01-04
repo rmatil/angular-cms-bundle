@@ -4,12 +4,12 @@
 namespace rmatil\CmsBundle\Tests\Mapper;
 
 
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use rmatil\CmsBundle\Entity\Location;
 use rmatil\CmsBundle\Mapper\LocationMapper;
 use rmatil\CmsBundle\Model\LocationDTO;
 
-class LocationMapperTest extends PHPUnit_Framework_TestCase {
+class LocationMapperTest extends TestCase {
 
     /**
      * @var LocationMapper

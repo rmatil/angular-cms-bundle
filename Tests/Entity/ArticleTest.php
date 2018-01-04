@@ -5,14 +5,14 @@ namespace Entity;
 
 
 use DateTime;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use rmatil\CmsBundle\Entity\Article;
 use rmatil\CmsBundle\Entity\ArticleCategory;
 use rmatil\CmsBundle\Entity\Language;
 use rmatil\CmsBundle\Entity\Page;
 use rmatil\CmsBundle\Entity\User;
 
-class ArticleTest extends PHPUnit_Framework_TestCase {
+class ArticleTest extends TestCase {
 
     /**
      * @var Article

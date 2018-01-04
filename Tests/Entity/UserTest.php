@@ -4,10 +4,10 @@
 namespace rmatil\CmsBundle\Tests\Entity;
 
 
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use rmatil\CmsBundle\Entity\User;
 
-class UserTest extends PHPUnit_Framework_TestCase {
+class UserTest extends TestCase {
 
     /**
      * @var User

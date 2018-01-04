@@ -5,7 +5,7 @@ namespace rmatil\CmsBundle\Tests\Mapper;
 
 
 use Doctrine\Common\Collections\ArrayCollection;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use rmatil\CmsBundle\Entity\Event;
 use rmatil\CmsBundle\Entity\EventDetail;
 use rmatil\CmsBundle\Entity\Offer;
@@ -14,7 +14,7 @@ use rmatil\CmsBundle\Mapper\OfferMapper;
 use rmatil\CmsBundle\Model\EventDetailDTO;
 use rmatil\CmsBundle\Model\OfferDTO;
 
-class EventDetailMapperTest extends PHPUnit_Framework_TestCase {
+class EventDetailMapperTest extends TestCase {
 
     /**
      * @var OfferMapper

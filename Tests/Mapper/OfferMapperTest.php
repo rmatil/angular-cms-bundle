@@ -4,15 +4,12 @@
 namespace rmatil\CmsBundle\Tests\Mapper;
 
 
-use PHPUnit_Framework_TestCase;
-use rmatil\CmsBundle\Entity\Location;
+use PHPUnit\Framework\TestCase;
 use rmatil\CmsBundle\Entity\Offer;
-use rmatil\CmsBundle\Mapper\LocationMapper;
 use rmatil\CmsBundle\Mapper\OfferMapper;
-use rmatil\CmsBundle\Model\LocationDTO;
 use rmatil\CmsBundle\Model\OfferDTO;
 
-class OfferMapperTest extends PHPUnit_Framework_TestCase {
+class OfferMapperTest extends TestCase {
 
     /**
      * @var OfferMapper

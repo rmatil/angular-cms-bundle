@@ -4,12 +4,12 @@
 namespace rmatil\CmsBundle\Tests\Mapper;
 
 
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use rmatil\CmsBundle\Entity\ArticleCategory;
 use rmatil\CmsBundle\Mapper\ArticleCategoryMapper;
 use rmatil\CmsBundle\Model\ArticleCategoryDTO;
 
-class ArticleCategoryMapperTest extends PHPUnit_Framework_TestCase {
+class ArticleCategoryMapperTest extends TestCase {
 
     /**
      * @var ArticleCategoryMapper

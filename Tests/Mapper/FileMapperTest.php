@@ -4,19 +4,18 @@
 namespace rmatil\CmsBundle\Tests\Mapper;
 
 
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use rmatil\CmsBundle\Entity\File;
 use rmatil\CmsBundle\Entity\MediaTag;
 use rmatil\CmsBundle\Entity\User;
 use rmatil\CmsBundle\Mapper\FileMapper;
-use rmatil\CmsBundle\Mapper\MediaTagMapper;
 use rmatil\CmsBundle\Mapper\UserMapper;
 use rmatil\CmsBundle\Model\FileDTO;
 use rmatil\CmsBundle\Model\MediaTagDTO;
 use rmatil\CmsBundle\Model\UserDTO;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
-class FileMapperTest extends PHPUnit_Framework_TestCase {
+class FileMapperTest extends TestCase {
 
     private static $FILE_NAME = __DIR__ . '/rmatil_cms_someFile.txt';
 

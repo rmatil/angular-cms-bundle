@@ -5,7 +5,7 @@ namespace rmatil\CmsBundle\Tests\Mapper;
 
 
 use DateTime;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use rmatil\CmsBundle\Entity\Article;
 use rmatil\CmsBundle\Entity\ArticleCategory;
 use rmatil\CmsBundle\Entity\Language;
@@ -20,7 +20,7 @@ use rmatil\CmsBundle\Model\ArticleDTO;
 use rmatil\CmsBundle\Model\LanguageDTO;
 use rmatil\CmsBundle\Model\UserDTO;
 
-class ArticleMapperTest extends PHPUnit_Framework_TestCase {
+class ArticleMapperTest extends TestCase {
 
     /**
      * @var ArticleMapper
