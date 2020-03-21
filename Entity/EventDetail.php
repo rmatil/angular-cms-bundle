@@ -45,6 +45,29 @@ class EventDetail {
      */
     private $event;
 
+    /**
+     *
+     * @ORM\Column(type="string", nullable=true)
+     *
+     * @var string
+     */
+    protected $eventAttendanceMode;
+
+    /**
+     *
+     * @ORM\Column(type="string", nullable=true)
+     *
+     * @var string
+     */
+    protected $eventStatus;
+
+    /**
+     *
+     * @ORM\Column(type="string", nullable=true)
+     *
+     * @var string
+     */
+    protected $performer;
 
     public function __construct() {
         $this->offers = new ArrayCollection();
@@ -122,5 +145,53 @@ class EventDetail {
      */
     public function setEvent(Event $event = null) {
         $this->event = $event;
+    }
+
+    /**
+     * @return string
+     */
+    public function getEventAttendanceMode(): string
+    {
+        return $this->eventAttendanceMode;
+    }
+
+    /**
+     * @param string $eventAttendanceMode
+     */
+    public function setEventAttendanceMode(string $eventAttendanceMode): void
+    {
+        $this->eventAttendanceMode = $eventAttendanceMode;
+    }
+
+    /**
+     * @return string
+     */
+    public function getEventStatus(): string
+    {
+        return $this->eventStatus;
+    }
+
+    /**
+     * @param string $eventStatus
+     */
+    public function setEventStatus(string $eventStatus): void
+    {
+        $this->eventStatus = $eventStatus;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPerformer(): string
+    {
+        return $this->performer;
+    }
+
+    /**
+     * @param string $performer
+     */
+    public function setPerformer(string $performer): void
+    {
+        $this->performer = $performer;
     }
 }
