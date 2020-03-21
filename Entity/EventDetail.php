@@ -150,7 +150,7 @@ class EventDetail {
     /**
      * @return string
      */
-    public function getEventAttendanceMode(): string
+    public function getEventAttendanceMode(): ?string
     {
         return $this->eventAttendanceMode;
     }
@@ -166,7 +166,7 @@ class EventDetail {
     /**
      * @return string
      */
-    public function getEventStatus(): string
+    public function getEventStatus(): ?string
     {
         return $this->eventStatus;
     }
@@ -182,7 +182,7 @@ class EventDetail {
     /**
      * @return string
      */
-    public function getPerformer(): string
+    public function getPerformer(): ?string
     {
         return $this->performer;
     }
